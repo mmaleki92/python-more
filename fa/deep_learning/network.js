@@ -271,6 +271,7 @@ class NeuralNetwork {
     }
     
     reset() {
+        console.log("Resetting network..."); // Debug log
         this.neurons = [];
         this.connections = [];
         this.signals = [];
@@ -278,28 +279,53 @@ class NeuralNetwork {
     }
     
     toggleAnimation() {
+        console.log("Animation state before toggle:", this.animationRunning); // Debug log
         this.animationRunning = !this.animationRunning;
+        console.log("Animation state after toggle:", this.animationRunning); // Debug log
         return this.animationRunning;
     }
 }
 
+// Store the network instance globally to ensure it's accessible
+let networkInstance;
+
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM loaded, initializing neural network..."); // Debug log
+    
     const canvas = document.getElementById('neuralNetworkCanvas');
     if (canvas) {
-        const network = new NeuralNetwork(canvas);
+        // Create network instance and store it globally
+        networkInstance = new NeuralNetwork(canvas);
         
         // Start animation loop
-        network.render();
+        networkInstance.render();
         
         // Set up control buttons
-        document.getElementById('reset').addEventListener('click', () => {
-            network.reset();
-        });
+        const resetButton = document.getElementById('reset');
+        const toggleButton = document.getElementById('toggleAnimation');
         
-        document.getElementById('toggleAnimation').addEventListener('click', (e) => {
-            const isRunning = network.toggleAnimation();
-            e.target.innerHTML = isRunning ? '<i class="fas fa-pause"></i> توقف انیمیشن' : '<i class="fas fa-play"></i> شروع انیمیشن';
-        });
+        if (resetButton) {
+            resetButton.addEventListener('click', () => {
+                console.log("Reset button clicked"); // Debug log
+                networkInstance.reset();
+            });
+        } else {
+            console.error("Reset button not found in the DOM");
+        }
+        
+        if (toggleButton) {
+            toggleButton.addEventListener('click', (e) => {
+                console.log("Toggle button clicked"); // Debug log
+                const isRunning = networkInstance.toggleAnimation();
+                e.target.innerHTML = isRunning ? 
+                    '<i class="fas fa-pause"></i> توقف انیمیشن' : 
+                    '<i class="fas fa-play"></i> شروع انیمیشن';
+            });
+        } else {
+            console.error("Toggle button not found in the DOM");
+        }
+    } else {
+        console.error("Canvas element not found in the DOM");
     }
 });

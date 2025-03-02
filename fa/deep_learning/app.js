@@ -270,7 +270,6 @@ const conceptData = {
         `
     }
 };
-
 // DOM Elements
 document.addEventListener('DOMContentLoaded', () => {
     // Get DOM elements
@@ -330,6 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
+            
             if (targetElement) {
                 window.scrollTo({
                     top: targetElement.offsetTop - 70,
@@ -373,9 +373,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     setActiveNavItem();
     
-    // Initialize neural network visualization after everything else is loaded
-    if (document.getElementById('neuralNetworkCanvas')) {
-        const network = new NeuralNetwork(document.getElementById('neuralNetworkCanvas'));
-        network.render();
-    }
+    // IMPORTANT: Do NOT initialize the neural network here
+    // Let network.js handle its initialization to avoid conflicts
 });
