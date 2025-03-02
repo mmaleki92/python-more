@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Learning Neural Network Visualization</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Deep Learning: Neural Networks in Action</h1>
+        <p class="subtitle">An interactive visualization of neural network dynamics</p>
+        <p class="instructor">Dr. M. Maleki</p>
+    </header>
+
+    <section class="intro">
+        <h2>Introduction to Deep Learning</h2>
+        <p>Deep learning is a subset of machine learning where artificial neural networks, algorithms inspired by the
+            human brain, learn from large amounts of data. These networks can identify patterns and make decisions with
+            minimal human intervention.</p>
+    </section>
+
+    <section class="visualization">
+        <h2>Neural Network Visualization</h2>
+        <div class="canvas-container">
+            <canvas id="neuralNetworkCanvas"></canvas>
+        </div>
+        <div class="controls">
+            <button id="reset">Reset Network</button>
+            <button id="toggleAnimation">Pause Animation</button>
+        </div>
+    </section>
+
+    <section class="concepts">
+        <h2>Key Concepts in Deep Learning</h2>
+        <div class="concept-grid">
+            <div class="concept-card">
+                <h3>Neurons</h3>
+                <p>The basic computational units that receive inputs, apply an activation function, and produce outputs.
+                </p>
+            </div>
+            <div class="concept-card">
+                <h3>Weights & Biases</h3>
+                <p>Parameters that determine the strength of connections between neurons and are adjusted during
+                    training.</p>
+            </div>
+            <div class="concept-card">
+                <h3>Activation Functions</h3>
+                <p>Mathematical functions that determine the output of a neuron, introducing non-linearity to the
+                    network.</p>
+            </div>
+            <div class="concept-card">
+                <h3>Backpropagation</h3>
+                <p>The algorithm used to calculate gradients and update weights during training to minimize error.</p>
+            </div>
+            <div class="concept-card">
+                <h3>Convolutional Networks</h3>
+                <p>Specialized neural networks designed for processing grid-like data, such as images.</p>
+            </div>
+            <div class="concept-card">
+                <h3>Recurrent Networks</h3>
+                <p>Networks with feedback connections, allowing them to maintain memory of past inputs.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Created by mmaleki92 | Last updated: 2025-03-02</p>
+        <p>Deep Learning Course - GitHub Pages</p>
+    </footer>
+
+    <script src="network.js"></script>
+</body>
+
+</html>
