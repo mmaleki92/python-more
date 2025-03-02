@@ -1,0 +1,87 @@
+/* Final layout fixes - add this as a new file or append to existing fixes */
+
+/* Fix for the full page layout - ensure footer stays at bottom */
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Ensure main content takes available space to push footer down */
+.site-main {
+    flex: 1 0 auto;
+    padding-bottom: 2rem;
+}
+
+/* Specifically fix footer positioning */
+.site-footer {
+    flex-shrink: 0;
+    position: relative;
+    /* Ensure it's in the normal flow */
+    clear: both;
+    /* Clear any floats */
+}
+
+/* Fix the content and sidebar layout */
+.site-main .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    clear: both;
+    /* Ensure no floats affect this container */
+}
+
+.content-area {
+    flex: 1;
+    min-width: 0;
+    /* Prevent overflow issues */
+    float: none !important;
+    /* Override any float */
+}
+
+.sidebar {
+    width: 30%;
+    float: none !important;
+    /* Override any float */
+}
+
+/* Make sure posts grid works properly */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    float: none;
+    /* Ensure no floating */
+}
+
+/* Fix any remaining float issues */
+.clearfix::after,
+.site-main::after,
+.site-main .container::after,
+.posts-grid::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Fix responsive layout */
+@media (max-width: 992px) {
+    .site-main .container {
+        flex-direction: column;
+    }
+
+    .content-area,
+    .sidebar {
+        width: 100%;
+    }
+
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+}
