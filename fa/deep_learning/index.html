@@ -74,7 +74,29 @@
             <button id="toggleAnimation" class="btn secondary-btn"><i class="fas fa-pause"></i> توقف انیمیشن</button>
         </div>
     </section>
-
+    <!-- Add this section within your visualization section, after the existing controls -->
+    <div class="mnist-display">
+        <div class="mnist-info">
+            <h3 id="trainingStatus"></h3>
+            <div class="mnist-stats">
+                <div class="stat-item">
+                    <span class="stat-label">دوره آموزشی:</span>
+                    <span id="epochCounter" class="stat-value">0/0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">دقت:</span>
+                    <span id="accuracyValue" class="stat-value">0%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">خطا:</span>
+                    <span id="lossValue" class="stat-value">0</span>
+                </div>
+            </div>
+        </div>
+        <div class="mnist-prediction" id="mnistPrediction">
+            <!-- Prediction results will appear here -->
+        </div>
+    </div>
     <section id="concepts" class="concepts">
         <h2>مفاهیم کلیدی در یادگیری عمیق</h2>
         <p class="section-desc">روی هر کارت کلیک کنید تا اطلاعات بیشتری مشاهده کنید.</p>
