@@ -1,77 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deep Learning Neural Network Visualization</title>
+    <title>یادگیری عمیق: شبکه عصبی</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <h2><i class="fas fa-brain"></i> یادگیری عمیق</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">صفحه اصلی</a>
+                <a href="#concepts">مفاهیم</a>
+                <a href="#resources">منابع</a>
+                <a href="#about">درباره</a>
+            </div>
+            <div class="user-info">
+                <span><i class="fas fa-user"></i> mmaleki92</span>
+                <span><i class="fas fa-calendar"></i> ۱۴۰۴/۰۱/۱۲</span>
+            </div>
+        </div>
+    </nav>
+
     <header>
-        <h1>Deep Learning: Neural Networks in Action</h1>
-        <p class="subtitle">An interactive visualization of neural network dynamics</p>
-        <p class="instructor">Dr. M. Maleki</p>
+        <div class="header-content">
+            <h1>یادگیری عمیق: شبکه‌های عصبی در عمل</h1>
+            <p class="subtitle">تجسم تعاملی از شبکه‌های عصبی مصنوعی</p>
+            <p class="instructor">مرتضی مالکی</p>
+            <div class="header-buttons">
+                <a href="#visualization" class="btn primary-btn">مشاهده شبیه‌سازی</a>
+                <a href="#concepts" class="btn secondary-btn">مفاهیم کلیدی</a>
+            </div>
+        </div>
     </header>
 
     <section class="intro">
-        <h2>Introduction to Deep Learning</h2>
-        <p>Deep learning is a subset of machine learning where artificial neural networks, algorithms inspired by the
-            human brain, learn from large amounts of data. These networks can identify patterns and make decisions with
-            minimal human intervention.</p>
+        <h2>مقدمه‌ای بر یادگیری عمیق</h2>
+        <p>یادگیری عمیق زیرمجموعه‌ای از یادگیری ماشین است که در آن شبکه‌های عصبی مصنوعی، الگوریتم‌هایی الهام گرفته از
+            مغز انسان، از مقادیر زیادی داده یاد می‌گیرند. این شبکه‌ها می‌توانند الگوها را شناسایی کرده و با حداقل دخالت
+            انسان تصمیم‌گیری کنند.</p>
+        <div class="intro-cards">
+            <div class="intro-card">
+                <i class="fas fa-lightbulb"></i>
+                <h3>هوش مصنوعی</h3>
+                <p>ایجاد سیستم‌هایی که توانایی تفکر و یادگیری دارند</p>
+            </div>
+            <div class="intro-card">
+                <i class="fas fa-cogs"></i>
+                <h3>یادگیری ماشین</h3>
+                <p>الگوریتم‌هایی که از داده‌ها الگو استخراج می‌کنند</p>
+            </div>
+            <div class="intro-card">
+                <i class="fas fa-brain"></i>
+                <h3>یادگیری عمیق</h3>
+                <p>شبکه‌های عصبی با لایه‌های متعدد برای یادگیری پیشرفته</p>
+            </div>
+        </div>
     </section>
 
-    <section class="visualization">
-        <h2>Neural Network Visualization</h2>
+    <section id="visualization" class="visualization">
+        <h2>تجسم شبکه عصبی</h2>
         <div class="canvas-container">
             <canvas id="neuralNetworkCanvas"></canvas>
         </div>
         <div class="controls">
-            <button id="reset">Reset Network</button>
-            <button id="toggleAnimation">Pause Animation</button>
+            <button id="reset" class="btn primary-btn"><i class="fas fa-redo"></i> بازنشانی شبکه</button>
+            <button id="toggleAnimation" class="btn secondary-btn"><i class="fas fa-pause"></i> توقف انیمیشن</button>
         </div>
     </section>
 
-    <section class="concepts">
-        <h2>Key Concepts in Deep Learning</h2>
+    <section id="concepts" class="concepts">
+        <h2>مفاهیم کلیدی در یادگیری عمیق</h2>
+        <p class="section-desc">روی هر کارت کلیک کنید تا اطلاعات بیشتری مشاهده کنید.</p>
         <div class="concept-grid">
-            <div class="concept-card">
-                <h3>Neurons</h3>
-                <p>The basic computational units that receive inputs, apply an activation function, and produce outputs.
-                </p>
+            <div class="concept-card" data-concept="neurons">
+                <div class="card-icon"><i class="fas fa-dot-circle"></i></div>
+                <h3>نورون‌ها</h3>
+                <p>واحدهای محاسباتی پایه که ورودی‌ها را دریافت، پردازش و خروجی تولید می‌کنند.</p>
+                <span class="read-more">بیشتر بخوانید <i class="fas fa-arrow-left"></i></span>
             </div>
-            <div class="concept-card">
-                <h3>Weights & Biases</h3>
-                <p>Parameters that determine the strength of connections between neurons and are adjusted during
-                    training.</p>
+            <div class="concept-card" data-concept="weights">
+                <div class="card-icon"><i class="fas fa-balance-scale"></i></div>
+                <h3>وزن‌ها و بایاس‌ها</h3>
+                <p>پارامترهایی که قدرت اتصالات بین نورون‌ها را تعیین می‌کنند و در طول آموزش تنظیم می‌شوند.</p>
+                <span class="read-more">بیشتر بخوانید <i class="fas fa-arrow-left"></i></span>
             </div>
-            <div class="concept-card">
-                <h3>Activation Functions</h3>
-                <p>Mathematical functions that determine the output of a neuron, introducing non-linearity to the
-                    network.</p>
+            <div class="concept-card" data-concept="activation">
+                <div class="card-icon"><i class="fas fa-wave-square"></i></div>
+                <h3>توابع فعال‌سازی</h3>
+                <p>توابع ریاضی که خروجی یک نورون را تعیین کرده و غیرخطی بودن را به شبکه معرفی می‌کنند.</p>
+                <span class="read-more">بیشتر بخوانید <i class="fas fa-arrow-left"></i></span>
             </div>
-            <div class="concept-card">
-                <h3>Backpropagation</h3>
-                <p>The algorithm used to calculate gradients and update weights during training to minimize error.</p>
+            <div class="concept-card" data-concept="backprop">
+                <div class="card-icon"><i class="fas fa-arrow-right-arrow-left"></i></div>
+                <h3>انتشار معکوس</h3>
+                <p>الگوریتمی که برای محاسبه گرادیان‌ها و به‌روزرسانی وزن‌ها در طول آموزش استفاده می‌شود.</p>
+                <span class="read-more">بیشتر بخوانید <i class="fas fa-arrow-left"></i></span>
             </div>
-            <div class="concept-card">
-                <h3>Convolutional Networks</h3>
-                <p>Specialized neural networks designed for processing grid-like data, such as images.</p>
+            <div class="concept-card" data-concept="cnn">
+                <div class="card-icon"><i class="fas fa-th"></i></div>
+                <h3>شبکه‌های کانولوشنی</h3>
+                <p>شبکه‌های عصبی تخصصی طراحی شده برای پردازش داده‌های شبکه‌ای مانند تصاویر.</p>
+                <span class="read-more">بیشتر بخوانید <i class="fas fa-arrow-left"></i></span>
             </div>
-            <div class="concept-card">
-                <h3>Recurrent Networks</h3>
-                <p>Networks with feedback connections, allowing them to maintain memory of past inputs.</p>
+            <div class="concept-card" data-concept="rnn">
+                <div class="card-icon"><i class="fas fa-sync"></i></div>
+                <h3>شبکه‌های بازگشتی</h3>
+                <p>شبکه‌هایی با اتصالات بازخوردی که به آنها امکان می‌دهد حافظه از ورودی‌های گذشته را حفظ کنند.</p>
+                <span class="read-more">بیشتر بخوانید <i class="fas fa-arrow-left"></i></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Concept Details Overlay -->
+    <div id="concept-overlay" class="overlay">
+        <div class="overlay-content">
+            <div class="overlay-header">
+                <h2 id="concept-title"></h2>
+                <button id="close-overlay"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="overlay-body">
+                <div id="concept-content"></div>
+            </div>
+            <div class="overlay-footer">
+                <button id="back-to-concepts" class="btn secondary-btn"><i class="fas fa-arrow-right"></i> بازگشت به
+                    مفاهیم</button>
+            </div>
+        </div>
+    </div>
+
+    <section id="resources" class="resources">
+        <h2>منابع آموزشی</h2>
+        <div class="resource-grid">
+            <div class="resource-card">
+                <div class="resource-icon"><i class="fas fa-book"></i></div>
+                <h3>کتاب‌ها</h3>
+                <ul>
+                    <li>یادگیری عمیق توسط یان گودفلو</li>
+                    <li>شبکه‌های عصبی و یادگیری عمیق</li>
+                    <li>هوش مصنوعی: رویکردی مدرن</li>
+                </ul>
+            </div>
+            <div class="resource-card">
+                <div class="resource-icon"><i class="fas fa-laptop-code"></i></div>
+                <h3>دوره‌های آنلاین</h3>
+                <ul>
+                    <li>یادگیری عمیق توسط اندرو انگ</li>
+                    <li>دوره‌های یادگیری عمیق از دانشگاه استنفورد</li>
+                    <li>پایتون برای یادگیری ماشین</li>
+                </ul>
+            </div>
+            <div class="resource-card">
+                <div class="resource-icon"><i class="fas fa-tools"></i></div>
+                <h3>ابزارها و کتابخانه‌ها</h3>
+                <ul>
+                    <li>تنسورفلو</li>
+                    <li>پایتورچ</li>
+                    <li>کراس</li>
+                    <li>سایکیت-لرن</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2>درباره این دوره</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>این دوره یادگیری عمیق برای دانشجویان علاقه‌مند به هوش مصنوعی و یادگیری ماشین طراحی شده است. در این
+                    دوره، دانشجویان با اصول اساسی شبکه‌های عصبی، روش‌های آموزش آنها و کاربردهای عملی آشنا می‌شوند.</p>
+                <p>برای اطلاعات بیشتر درباره این دوره، لطفا با مدرس دوره تماس بگیرید یا به صفحه رسمی دانشگاه مراجعه
+                    کنید.</p>
+                <div class="contact-info">
+                    <div><i class="fas fa-envelope"></i> mmaleki92@example.com</div>
+                    <div><i class="fas fa-phone"></i> ۲۳۴۵-۹۸۷-۰۹۱۲</div>
+                </div>
+            </div>
+            <div class="instructor-profile">
+                <div class="profile-img">
+                    <img src="https://via.placeholder.com/150" alt="مرتضی مالکی">
+                </div>
+                <h3>مرتضی مالکی</h3>
+                <p>استاد هوش مصنوعی و یادگیری ماشین</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>Created by mmaleki92 | Last updated: 2025-03-02</p>
-        <p>Deep Learning Course - GitHub Pages</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>یادگیری عمیق</h3>
+                <p>صفحات آموزشی برای دانشجویان علاقه‌مند به هوش مصنوعی</p>
+            </div>
+            <div class="footer-section">
+                <h3>لینک‌های مفید</h3>
+                <ul>
+                    <li><a href="#visualization">تجسم شبکه عصبی</a></li>
+                    <li><a href="#concepts">مفاهیم کلیدی</a></li>
+                    <li><a href="#resources">منابع آموزشی</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>ارتباط با ما</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>ساخته شده توسط mmaleki92 | آخرین به‌روزرسانی: ۱۴۰۴/۰۱/۱۲</p>
+        </div>
     </footer>
 
     <script src="network.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>
