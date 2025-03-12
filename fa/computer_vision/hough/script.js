@@ -18,6 +18,9 @@ let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
 
+// Keep track of points drawn in Hough space for accumulating lines
+let drawnHoughPoints = []; // Will store {type: 'rhoTheta'|'mc', x: number, y: number}
+
 // Canvas dimensions
 const imageWidth = imageCanvas.width;
 const imageHeight = imageCanvas.height;
@@ -60,6 +63,9 @@ function initializeCanvases() {
             houghSpaceMC[i][j] = 0;
         }
     }
+    
+    // Clear any stored Hough points
+    drawnHoughPoints = [];
 }
 
 function drawGridLines(ctx, width, height) {
@@ -202,6 +208,14 @@ function startDrawing(e) {
         lastX = e.clientX - rect.left;
         lastY = e.clientY - rect.top;
         isDrawing = true;
+        
+        // If starting to draw in Hough space, prepare image space
+        if (currentCanvas === 'hough') {
+            // Clear image space as we'll be drawing new lines
+            imageCtx.fillStyle = 'white';
+            imageCtx.fillRect(0, 0, imageWidth, imageHeight);
+            drawGridLines(imageCtx, imageWidth, imageHeight);
+        }
     }
 }
 
@@ -244,8 +258,17 @@ function draw(e) {
                 // Update hough space
                 houghSpaceRhoTheta[thetaIndex][rhoIndex] = 1;
                 
-                // Calculate inverse Hough transform from rho-theta
-                calculateInverseHoughTransformRhoTheta(thetaIndex, rhoIndex);
+                // Store the point for later line drawing
+                drawnHoughPoints.push({
+                    type: 'rhoTheta',
+                    thetaIdx: thetaIndex,
+                    rhoIdx: rhoIndex,
+                    x: x,
+                    y: y
+                });
+                
+                // Draw all accumulated lines
+                drawAllLinesFromHoughPoints();
             }
         } 
         else if (currentHoughType === 'mc') {
@@ -264,8 +287,17 @@ function draw(e) {
                 // Update hough space
                 houghSpaceMC[mIndex][cIndex] = 1;
                 
-                // Calculate inverse Hough transform from m-c
-                calculateInverseHoughTransformMC(mIndex, cIndex);
+                // Store the point for later line drawing
+                drawnHoughPoints.push({
+                    type: 'mc',
+                    mIdx: mIndex,
+                    cIdx: cIndex,
+                    x: x,
+                    y: y
+                });
+                
+                // Draw all accumulated lines
+                drawAllLinesFromHoughPoints();
             }
         }
     }
@@ -276,6 +308,83 @@ function draw(e) {
 
 function stopDrawing() {
     isDrawing = false;
+}
+
+function drawAllLinesFromHoughPoints() {
+    // Clear the image canvas
+    imageCtx.fillStyle = 'white';
+    imageCtx.fillRect(0, 0, imageWidth, imageHeight);
+    drawGridLines(imageCtx, imageWidth, imageHeight);
+    
+    // Draw each line corresponding to a Hough point
+    for (const point of drawnHoughPoints) {
+        if (point.type === 'rhoTheta') {
+            drawLineFromRhoTheta(point.thetaIdx, point.rhoIdx);
+        } else if (point.type === 'mc') {
+            drawLineFromMC(point.mIdx, point.cIdx);
+        }
+    }
+}
+
+function drawLineFromRhoTheta(thetaIdx, rhoIdx) {
+    // Map indices to actual theta and rho values
+    const theta = (thetaIdx / thetaResolution) * Math.PI; // 0 to π
+    const rho = ((rhoIdx / houghHeight) * rhoResolution) - (rhoResolution/2);
+    
+    // Convert from polar to Cartesian coordinates
+    const cos_t = Math.cos(theta);
+    const sin_t = Math.sin(theta);
+    
+    // We need two points to draw a line
+    let x1, y1, x2, y2;
+    
+    // Use different strategies depending on the angle
+    if (Math.abs(sin_t) > 0.01) {
+        // For angles not too close to horizontal
+        x1 = 0;
+        y1 = (rho / sin_t) + (imageHeight / 2);
+        x2 = imageWidth;
+        y2 = ((rho - x2 * cos_t) / sin_t) + (imageHeight / 2);
+    } else {
+        // For angles close to horizontal
+        y1 = 0;
+        x1 = (rho / cos_t) + (imageWidth / 2);
+        y2 = imageHeight;
+        x2 = ((rho - y2 * sin_t) / cos_t) + (imageWidth / 2);
+    }
+    
+    // Draw the line
+    imageCtx.strokeStyle = 'blue';
+    imageCtx.lineWidth = 2;
+    imageCtx.beginPath();
+    imageCtx.moveTo(x1, y1);
+    imageCtx.lineTo(x2, y2);
+    imageCtx.stroke();
+}
+
+function drawLineFromMC(mIdx, cIdx) {
+    // Map indices to actual m and c values
+    const m = ((mIdx / mResolution) * (2 * mRange)) - mRange;
+    const c = ((cIdx / cResolution) * (2 * cRange)) - cRange;
+    
+    // We need two points to draw a line in the form y = mx + c
+    // Convert to image coordinates (with origin at center)
+    const centerX = imageWidth / 2;
+    const centerY = imageHeight / 2;
+    
+    // Calculate two points for the line
+    const x1 = 0;
+    const y1 = centerY - (m * (-centerX) + c);
+    const x2 = imageWidth;
+    const y2 = centerY - (m * (imageWidth - centerX) + c);
+    
+    // Draw the line
+    imageCtx.strokeStyle = 'blue';
+    imageCtx.lineWidth = 2;
+    imageCtx.beginPath();
+    imageCtx.moveTo(x1, y1);
+    imageCtx.lineTo(x2, y2);
+    imageCtx.stroke();
 }
 
 function calculateHoughTransform(x1, y1, x2, y2) {
@@ -425,88 +534,24 @@ function updateHoughCanvas() {
     }
 }
 
-function calculateInverseHoughTransformRhoTheta(thetaIdx, rhoIdx) {
-    // Map indices to actual theta and rho values
-    const theta = (thetaIdx / thetaResolution) * Math.PI; // 0 to π
-    const rho = ((rhoIdx / houghHeight) * rhoResolution) - (rhoResolution/2);
-    
-    // Clear the image canvas and redraw grid
-    imageCtx.fillStyle = 'white';
-    imageCtx.fillRect(0, 0, imageWidth, imageHeight);
-    drawGridLines(imageCtx, imageWidth, imageHeight);
-    
-    // Convert from polar to Cartesian coordinates
-    const cos_t = Math.cos(theta);
-    const sin_t = Math.sin(theta);
-    
-    // We need two points to draw a line
-    let x1, y1, x2, y2;
-    
-    // Use different strategies depending on the angle
-    if (Math.abs(sin_t) > 0.01) {
-        // For angles not too close to horizontal
-        x1 = 0;
-        y1 = (rho / sin_t) + (imageHeight / 2);
-        x2 = imageWidth;
-        y2 = ((rho - x2 * cos_t) / sin_t) + (imageHeight / 2);
-    } else {
-        // For angles close to horizontal
-        y1 = 0;
-        x1 = (rho / cos_t) + (imageWidth / 2);
-        y2 = imageHeight;
-        x2 = ((rho - y2 * sin_t) / cos_t) + (imageWidth / 2);
-    }
-    
-    // Draw the line
-    imageCtx.strokeStyle = 'blue';
-    imageCtx.lineWidth = 2;
-    imageCtx.beginPath();
-    imageCtx.moveTo(x1, y1);
-    imageCtx.lineTo(x2, y2);
-    imageCtx.stroke();
-}
-
-function calculateInverseHoughTransformMC(mIdx, cIdx) {
-    // Map indices to actual m and c values
-    const m = ((mIdx / mResolution) * (2 * mRange)) - mRange;
-    const c = ((cIdx / cResolution) * (2 * cRange)) - cRange;
-    
-    // Clear the image canvas and redraw grid
-    imageCtx.fillStyle = 'white';
-    imageCtx.fillRect(0, 0, imageWidth, imageHeight);
-    drawGridLines(imageCtx, imageWidth, imageHeight);
-    
-    // We need two points to draw a line in the form y = mx + c
-    // Convert to image coordinates (with origin at center)
-    const centerX = imageWidth / 2;
-    const centerY = imageHeight / 2;
-    
-    // Calculate two points for the line
-    const x1 = 0;
-    const y1 = centerY - (m * (-centerX) + c);
-    const x2 = imageWidth;
-    const y2 = centerY - (m * (imageWidth - centerX) + c);
-    
-    // Draw the line
-    imageCtx.strokeStyle = 'blue';
-    imageCtx.lineWidth = 2;
-    imageCtx.beginPath();
-    imageCtx.moveTo(x1, y1);
-    imageCtx.lineTo(x2, y2);
-    imageCtx.stroke();
-}
-
 // Button event listeners
 drawImageBtn.addEventListener('click', () => {
     currentCanvas = 'image';
     drawImageBtn.classList.add('active');
     drawHoughBtn.classList.remove('active');
+    drawnHoughPoints = []; // Clear Hough points when switching modes
 });
 
 drawHoughBtn.addEventListener('click', () => {
     currentCanvas = 'hough';
     drawHoughBtn.classList.add('active');
     drawImageBtn.classList.remove('active');
+    drawnHoughPoints = []; // Clear Hough points when switching modes
+    
+    // Clear image space as we're starting new Hough space drawing
+    imageCtx.fillStyle = 'white';
+    imageCtx.fillRect(0, 0, imageWidth, imageHeight);
+    drawGridLines(imageCtx, imageWidth, imageHeight);
 });
 
 clearImageBtn.addEventListener('click', () => {
@@ -529,6 +574,7 @@ clearImageBtn.addEventListener('click', () => {
     }
     
     updateHoughCanvas();
+    drawnHoughPoints = []; // Clear drawn Hough points
 });
 
 clearHoughBtn.addEventListener('click', () => {
@@ -558,12 +604,21 @@ clearHoughBtn.addEventListener('click', () => {
     imageCtx.fillStyle = 'white';
     imageCtx.fillRect(0, 0, imageWidth, imageHeight);
     drawGridLines(imageCtx, imageWidth, imageHeight);
+    
+    drawnHoughPoints = []; // Clear drawn Hough points
 });
 
 // Hough type radio button event listeners
 houghTypeRadios.forEach(radio => {
     radio.addEventListener('change', (e) => {
         currentHoughType = e.target.value;
+        drawnHoughPoints = []; // Clear points when changing mode
+        
+        // Clear image space when changing Hough space type
+        imageCtx.fillStyle = 'white';
+        imageCtx.fillRect(0, 0, imageWidth, imageHeight);
+        drawGridLines(imageCtx, imageWidth, imageHeight);
+        
         updateHoughCanvas();
     });
 });
