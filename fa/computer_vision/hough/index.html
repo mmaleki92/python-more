@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Hough Transform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Hough Transform</h1>
+        
+        <div class="canvas-container">
+            <div class="canvas-wrapper">
+                <h2>Image Space</h2>
+                <canvas id="imageCanvas" width="400" height="400"></canvas>
+                <div class="controls">
+                    <button id="drawImageBtn" class="active">Draw in Image Space</button>
+                    <button id="clearImageBtn">Clear Image Space</button>
+                </div>
+            </div>
+            
+            <div class="canvas-wrapper">
+                <h2>Hough Space (ρ-θ)</h2>
+                <canvas id="houghCanvas" width="400" height="400"></canvas>
+                <div class="controls">
+                    <button id="drawHoughBtn">Draw in Hough Space</button>
+                    <button id="clearHoughBtn">Clear Hough Space</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <h3>Instructions</h3>
+            <p>Draw in either canvas to see the transform in the other canvas.</p>
+            <p>• Image Space: Points and lines in Cartesian coordinates (x,y)</p>
+            <p>• Hough Space: Lines represented in polar coordinates (ρ,θ)</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
