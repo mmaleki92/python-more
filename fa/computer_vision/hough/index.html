@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Hough Transform</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Interactive Hough Transform</h1>
-        
+
         <div class="canvas-container">
             <div class="canvas-wrapper">
                 <h2>Image Space</h2>
@@ -19,16 +21,16 @@
                     <button id="clearImageBtn">Clear Image Space</button>
                 </div>
             </div>
-            
+
             <div class="canvas-wrapper">
                 <h2>Hough Space</h2>
                 <div class="hough-selection">
                     <label>
-                        <input type="radio" name="houghType" value="rhoTheta" checked> 
+                        <input type="radio" name="houghType" value="rhoTheta" checked>
                         ρ-θ Space
                     </label>
                     <label>
-                        <input type="radio" name="houghType" value="mc"> 
+                        <input type="radio" name="houghType" value="mc">
                         m-c Space (y=mx+c)
                     </label>
                 </div>
@@ -38,17 +40,30 @@
                     <button id="clearHoughBtn">Clear Hough Space</button>
                 </div>
             </div>
+
+            <div class="canvas-wrapper">
+                <h2>Detected Lines</h2>
+                <canvas id="detectionCanvas" width="400" height="400"></canvas>
+                <div class="controls">
+                    <div class="slider-container">
+                        <label for="thresholdSlider">Threshold: <span id="thresholdValue">50</span>%</label>
+                        <input type="range" id="thresholdSlider" min="1" max="100" value="50">
+                    </div>
+                    <button id="detectLinesBtn">Detect Lines</button>
+                </div>
+            </div>
         </div>
-        
+
         <div class="info-panel">
             <h3>Instructions</h3>
             <p>Draw in either canvas to see the transform in the other canvas.</p>
             <p>• Image Space: Points and lines in Cartesian coordinates (x,y)</p>
             <p>• ρ-θ Space: Lines represented in polar coordinates as ρ = x·cos(θ) + y·sin(θ)</p>
             <p>• m-c Space: Lines represented in slope-intercept form as y = mx + c</p>
-            <p><strong>Note:</strong> m-c form cannot represent vertical lines (infinite slope)</p>
+            <p>• Use the "Detect Lines" button to find lines in the image based on peaks in the Hough space</p>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

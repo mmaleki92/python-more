@@ -1,15 +1,20 @@
 // Canvas elements
 const imageCanvas = document.getElementById('imageCanvas');
 const houghCanvas = document.getElementById('houghCanvas');
+const detectionCanvas = document.getElementById('detectionCanvas');
 const imageCtx = imageCanvas.getContext('2d');
 const houghCtx = houghCanvas.getContext('2d');
+const detectionCtx = detectionCanvas.getContext('2d');
 
 // Buttons and controls
 const drawImageBtn = document.getElementById('drawImageBtn');
 const drawHoughBtn = document.getElementById('drawHoughBtn');
 const clearImageBtn = document.getElementById('clearImageBtn');
 const clearHoughBtn = document.getElementById('clearHoughBtn');
+const detectLinesBtn = document.getElementById('detectLinesBtn');
 const houghTypeRadios = document.querySelectorAll('input[name="houghType"]');
+const thresholdSlider = document.getElementById('thresholdSlider');
+const thresholdValue = document.getElementById('thresholdValue');
 
 // State variables
 let currentCanvas = 'image'; // 'image' or 'hough'
@@ -17,6 +22,7 @@ let currentHoughType = 'rhoTheta'; // 'rhoTheta' or 'mc'
 let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
+let detectionThreshold = 50; // Default threshold percentage
 
 // Keep track of points drawn in Hough space for accumulating lines
 let drawnHoughPoints = []; // Will store {type: 'rhoTheta'|'mc', x: number, y: number}
@@ -26,6 +32,8 @@ const imageWidth = imageCanvas.width;
 const imageHeight = imageCanvas.height;
 const houghWidth = houghCanvas.width;
 const houghHeight = houghCanvas.height;
+const detectionWidth = detectionCanvas.width;
+const detectionHeight = detectionCanvas.height;
 
 // Hough transform settings - ρ-θ space
 const thetaResolution = 180; // Number of theta values (0-180 degrees)
@@ -50,6 +58,11 @@ function initializeCanvases() {
     
     // Hough canvas setup
     updateHoughCanvas();
+    
+    // Detection canvas setup
+    detectionCtx.fillStyle = 'white';
+    detectionCtx.fillRect(0, 0, detectionWidth, detectionHeight);
+    drawGridLines(detectionCtx, detectionWidth, detectionHeight);
     
     // Clear hough space data
     for (let i = 0; i < thetaResolution; i++) {
@@ -240,6 +253,9 @@ function draw(e) {
         // Calculate Hough transform for the line segment
         calculateHoughTransform(lastX, lastY, x, y);
         updateHoughCanvas();
+        
+        // Run line detection automatically when drawing in image space
+        detectLines();
     } 
     else if (currentCanvas === 'hough' && e.target === houghCanvas) {
         // Draw in Hough space
@@ -269,6 +285,9 @@ function draw(e) {
                 
                 // Draw all accumulated lines
                 drawAllLinesFromHoughPoints();
+                
+                // Also update the detection canvas
+                detectLines();
             }
         } 
         else if (currentHoughType === 'mc') {
@@ -298,6 +317,9 @@ function draw(e) {
                 
                 // Draw all accumulated lines
                 drawAllLinesFromHoughPoints();
+                
+                // Also update the detection canvas
+                detectLines();
             }
         }
     }
@@ -305,11 +327,15 @@ function draw(e) {
     lastX = x;
     lastY = y;
 }
-
 function stopDrawing() {
-    isDrawing = false;
+    if (isDrawing) {
+        isDrawing = false;
+        
+        // Run line detection one more time at the end of drawing
+        // This ensures we get the final state
+        detectLines();
+    }
 }
-
 function drawAllLinesFromHoughPoints() {
     // Clear the image canvas
     imageCtx.fillStyle = 'white';
@@ -319,14 +345,20 @@ function drawAllLinesFromHoughPoints() {
     // Draw each line corresponding to a Hough point
     for (const point of drawnHoughPoints) {
         if (point.type === 'rhoTheta') {
-            drawLineFromRhoTheta(point.thetaIdx, point.rhoIdx);
+            drawLineFromRhoTheta(imageCtx, point.thetaIdx, point.rhoIdx);
         } else if (point.type === 'mc') {
-            drawLineFromMC(point.mIdx, point.cIdx);
+            drawLineFromMC(imageCtx, point.mIdx, point.cIdx);
         }
     }
+    
+    // Copy to detection canvas
+    detectionCtx.fillStyle = 'white';
+    detectionCtx.fillRect(0, 0, detectionWidth, detectionHeight);
+    drawGridLines(detectionCtx, detectionWidth, detectionHeight);
+    detectionCtx.drawImage(imageCanvas, 0, 0);
 }
 
-function drawLineFromRhoTheta(thetaIdx, rhoIdx) {
+function drawLineFromRhoTheta(ctx, thetaIdx, rhoIdx) {
     // Map indices to actual theta and rho values
     const theta = (thetaIdx / thetaResolution) * Math.PI; // 0 to π
     const rho = ((rhoIdx / houghHeight) * rhoResolution) - (rhoResolution/2);
@@ -354,15 +386,15 @@ function drawLineFromRhoTheta(thetaIdx, rhoIdx) {
     }
     
     // Draw the line
-    imageCtx.strokeStyle = 'blue';
-    imageCtx.lineWidth = 2;
-    imageCtx.beginPath();
-    imageCtx.moveTo(x1, y1);
-    imageCtx.lineTo(x2, y2);
-    imageCtx.stroke();
+    ctx.strokeStyle = 'blue';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
 }
 
-function drawLineFromMC(mIdx, cIdx) {
+function drawLineFromMC(ctx, mIdx, cIdx) {
     // Map indices to actual m and c values
     const m = ((mIdx / mResolution) * (2 * mRange)) - mRange;
     const c = ((cIdx / cResolution) * (2 * cRange)) - cRange;
@@ -379,12 +411,12 @@ function drawLineFromMC(mIdx, cIdx) {
     const y2 = centerY - (m * (imageWidth - centerX) + c);
     
     // Draw the line
-    imageCtx.strokeStyle = 'blue';
-    imageCtx.lineWidth = 2;
-    imageCtx.beginPath();
-    imageCtx.moveTo(x1, y1);
-    imageCtx.lineTo(x2, y2);
-    imageCtx.stroke();
+    ctx.strokeStyle = 'blue';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
 }
 
 function calculateHoughTransform(x1, y1, x2, y2) {
@@ -534,6 +566,153 @@ function updateHoughCanvas() {
     }
 }
 
+
+
+function detectLines() {
+    // Clear the detection canvas
+    detectionCtx.fillStyle = 'white';
+    detectionCtx.fillRect(0, 0, detectionWidth, detectionHeight);
+    drawGridLines(detectionCtx, detectionWidth, detectionHeight);
+    
+    // Find maximal value in Hough space for threshold calculation
+    let maxVal = 0;
+    for (let i = 0; i < thetaResolution; i++) {
+        for (let j = 0; j < rhoResolution; j++) {
+            if (houghSpaceRhoTheta[i][j] > maxVal) {
+                maxVal = houghSpaceRhoTheta[i][j];
+            }
+        }
+    }
+    
+    // Calculate threshold based on slider value (percentage of max)
+    const threshold = (detectionThreshold / 100) * maxVal;
+    
+    if (maxVal <= 1) {
+        console.log("No significant lines detected (max value too low)");
+        return;
+    }
+    
+    console.log(`Max accumulator value: ${maxVal}, Threshold: ${threshold}`);
+    
+    // Non-maximum suppression window size - smaller window for better precision
+    const windowSize = 3;
+    
+    // Keep track of detected peaks
+    const peaks = [];
+    
+    // Find local maxima that exceed the threshold
+    for (let thetaIdx = windowSize; thetaIdx < thetaResolution - windowSize; thetaIdx++) {
+        for (let rhoIdx = windowSize; rhoIdx < rhoResolution - windowSize; rhoIdx++) {
+            const centerValue = houghSpaceRhoTheta[thetaIdx][rhoIdx];
+            
+            // Skip if below threshold
+            if (centerValue < threshold) continue;
+            
+            // Check if it's a local maximum in the window
+            let isLocalMax = true;
+            
+            // Compare with all neighbors in the window
+            for (let i = -windowSize; i <= windowSize && isLocalMax; i++) {
+                for (let j = -windowSize; j <= windowSize && isLocalMax; j++) {
+                    // Skip the center point itself
+                    if (i === 0 && j === 0) continue;
+                    
+                    // Make sure we don't go out of bounds
+                    if (thetaIdx + i < 0 || thetaIdx + i >= thetaResolution ||
+                        rhoIdx + j < 0 || rhoIdx + j >= rhoResolution) {
+                        continue;
+                    }
+                    
+                    const neighborValue = houghSpaceRhoTheta[thetaIdx + i][rhoIdx + j];
+                    if (neighborValue > centerValue) {
+                        isLocalMax = false;
+                        break;
+                    }
+                }
+            }
+            
+            if (isLocalMax) {
+                peaks.push({
+                    thetaIdx: thetaIdx,
+                    rhoIdx: rhoIdx,
+                    value: centerValue
+                });
+            }
+        }
+    }
+    
+    // Sort peaks by vote count (descending)
+    peaks.sort((a, b) => b.value - a.value);
+    
+    // Limit the number of lines to avoid noise
+    const maxLines = 10;  // Adjust as needed
+    const peaksToShow = peaks.slice(0, maxLines);
+    
+    console.log(`Found ${peaks.length} peaks, showing ${peaksToShow.length}`);
+    
+    // Draw the detected lines on the detection canvas
+    for (const peak of peaksToShow) {
+        // Convert to actual theta and rho values, ensuring correct normalization
+        const theta = (peak.thetaIdx / thetaResolution) * Math.PI;
+        const rho = ((peak.rhoIdx / rhoResolution) * (2 * rhoResolution/2)) - (rhoResolution/2);
+        
+        console.log(`Drawing line: theta=${theta.toFixed(2)}, rho=${rho.toFixed(2)}`);
+        
+        // Draw line in a different color to distinguish
+        drawLineFromParametersOnCanvas(detectionCtx, theta, rho, 'red', 2);
+        
+        // Optionally, mark the corresponding peak in the Hough space
+        const x = (peak.thetaIdx / thetaResolution) * houghWidth;
+        const y = (peak.rhoIdx / rhoResolution) * houghHeight;
+        houghCtx.strokeStyle = 'red';
+        houghCtx.lineWidth = 1;
+        houghCtx.beginPath();
+        houghCtx.arc(x, y, 8, 0, Math.PI * 2);
+        houghCtx.stroke();
+    }
+}
+
+// Improved helper function to draw a line from rho-theta parameters
+function drawLineFromParametersOnCanvas(ctx, theta, rho, color = 'blue', lineWidth = 2) {
+    // Convert from normalized parameters to actual coordinates
+    const cos_t = Math.cos(theta);
+    const sin_t = Math.sin(theta);
+    
+    // We need two points to draw a line
+    let x1, y1, x2, y2;
+    
+    // Use different strategies depending on the angle
+    if (Math.abs(sin_t) > 0.001) { // More precise threshold for near-horizontal lines
+        // For angles not too close to horizontal
+        x1 = 0;
+        y1 = (rho - (x1 - imageWidth/2) * cos_t) / sin_t + imageHeight/2;
+        x2 = imageWidth;
+        y2 = (rho - (x2 - imageWidth/2) * cos_t) / sin_t + imageHeight/2;
+    } else {
+        // For angles close to horizontal
+        y1 = 0;
+        x1 = (rho - (y1 - imageHeight/2) * sin_t) / cos_t + imageWidth/2;
+        y2 = imageHeight;
+        x2 = (rho - (y2 - imageHeight/2) * sin_t) / cos_t + imageWidth/2;
+    }
+    
+    // Draw the line
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+}
+
+// Updated threshold slider with more immediate feedback
+thresholdSlider.addEventListener('input', (e) => {
+    detectionThreshold = parseInt(e.target.value);
+    thresholdValue.textContent = detectionThreshold;
+    // Rerun detection immediately when threshold changes
+    detectLines();
+});
+
 // Button event listeners
 drawImageBtn.addEventListener('click', () => {
     currentCanvas = 'image';
@@ -575,6 +754,11 @@ clearImageBtn.addEventListener('click', () => {
     
     updateHoughCanvas();
     drawnHoughPoints = []; // Clear drawn Hough points
+    
+    // Clear detection canvas too
+    detectionCtx.fillStyle = 'white';
+    detectionCtx.fillRect(0, 0, detectionWidth, detectionHeight);
+    drawGridLines(detectionCtx, detectionWidth, detectionHeight);
 });
 
 clearHoughBtn.addEventListener('click', () => {
@@ -605,7 +789,21 @@ clearHoughBtn.addEventListener('click', () => {
     imageCtx.fillRect(0, 0, imageWidth, imageHeight);
     drawGridLines(imageCtx, imageWidth, imageHeight);
     
+    // Clear the detection canvas
+    detectionCtx.fillStyle = 'white';
+    detectionCtx.fillRect(0, 0, detectionWidth, detectionHeight);
+    drawGridLines(detectionCtx, detectionWidth, detectionHeight);
+    
     drawnHoughPoints = []; // Clear drawn Hough points
+});
+
+// Detect Lines button
+detectLinesBtn.addEventListener('click', detectLines);
+
+// Threshold slider
+thresholdSlider.addEventListener('input', (e) => {
+    detectionThreshold = parseInt(e.target.value);
+    thresholdValue.textContent = detectionThreshold;
 });
 
 // Hough type radio button event listeners
@@ -618,6 +816,11 @@ houghTypeRadios.forEach(radio => {
         imageCtx.fillStyle = 'white';
         imageCtx.fillRect(0, 0, imageWidth, imageHeight);
         drawGridLines(imageCtx, imageWidth, imageHeight);
+        
+        // Clear detection canvas when changing mode
+        detectionCtx.fillStyle = 'white';
+        detectionCtx.fillRect(0, 0, detectionWidth, detectionHeight);
+        drawGridLines(detectionCtx, detectionWidth, detectionHeight);
         
         updateHoughCanvas();
     });
