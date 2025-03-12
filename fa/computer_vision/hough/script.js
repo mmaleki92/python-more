@@ -9,9 +9,11 @@ const drawImageBtn = document.getElementById('drawImageBtn');
 const drawHoughBtn = document.getElementById('drawHoughBtn');
 const clearImageBtn = document.getElementById('clearImageBtn');
 const clearHoughBtn = document.getElementById('clearHoughBtn');
+const houghTypeRadios = document.querySelectorAll('input[name="houghType"]');
 
 // State variables
 let currentCanvas = 'image'; // 'image' or 'hough'
+let currentHoughType = 'rhoTheta'; // 'rhoTheta' or 'mc'
 let isDrawing = false;
 let lastX = 0;
 let lastY = 0;
@@ -22,10 +24,17 @@ const imageHeight = imageCanvas.height;
 const houghWidth = houghCanvas.width;
 const houghHeight = houghCanvas.height;
 
-// Hough transform settings
+// Hough transform settings - ρ-θ space
 const thetaResolution = 180; // Number of theta values (0-180 degrees)
 const rhoResolution = Math.ceil(Math.sqrt(imageWidth*imageWidth + imageHeight*imageHeight)); // Maximum distance possible
-const houghSpace = new Array(thetaResolution).fill(0).map(() => new Array(rhoResolution).fill(0));
+const houghSpaceRhoTheta = new Array(thetaResolution).fill(0).map(() => new Array(rhoResolution).fill(0));
+
+// Hough transform settings - m-c space (y = mx + c)
+const mResolution = 200; // Resolution for slope m
+const cResolution = 400; // Resolution for intercept c
+const mRange = 5; // m ranges from -mRange to mRange
+const cRange = 300; // c ranges from -cRange to cRange
+const houghSpaceMC = new Array(mResolution).fill(0).map(() => new Array(cResolution).fill(0));
 
 // Initialize canvases
 initializeCanvases();
@@ -37,14 +46,18 @@ function initializeCanvases() {
     drawGridLines(imageCtx, imageWidth, imageHeight);
     
     // Hough canvas setup
-    houghCtx.fillStyle = 'white';
-    houghCtx.fillRect(0, 0, houghWidth, houghHeight);
-    drawHoughSpaceGrid(houghCtx, houghWidth, houghHeight);
+    updateHoughCanvas();
     
     // Clear hough space data
     for (let i = 0; i < thetaResolution; i++) {
         for (let j = 0; j < rhoResolution; j++) {
-            houghSpace[i][j] = 0;
+            houghSpaceRhoTheta[i][j] = 0;
+        }
+    }
+    
+    for (let i = 0; i < mResolution; i++) {
+        for (let j = 0; j < cResolution; j++) {
+            houghSpaceMC[i][j] = 0;
         }
     }
 }
@@ -85,7 +98,7 @@ function drawGridLines(ctx, width, height) {
     ctx.stroke();
 }
 
-function drawHoughSpaceGrid(ctx, width, height) {
+function drawHoughSpaceGridRhoTheta(ctx, width, height) {
     ctx.strokeStyle = '#eee';
     ctx.lineWidth = 0.5;
     
@@ -114,6 +127,58 @@ function drawHoughSpaceGrid(ctx, width, height) {
     ctx.translate(5, height / 2);
     ctx.rotate(-Math.PI / 2);
     ctx.fillText('ρ (distance from origin)', 0, 0);
+    ctx.restore();
+}
+
+function drawHoughSpaceGridMC(ctx, width, height) {
+    ctx.strokeStyle = '#eee';
+    ctx.lineWidth = 0.5;
+    
+    // Draw grid lines
+    for (let i = 0; i <= width; i += 50) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, height);
+        ctx.stroke();
+    }
+    
+    for (let j = 0; j <= height; j += 50) {
+        ctx.beginPath();
+        ctx.moveTo(0, j);
+        ctx.lineTo(width, j);
+        ctx.stroke();
+    }
+    
+    // Draw axes
+    ctx.strokeStyle = '#aaa';
+    ctx.lineWidth = 1;
+    
+    // Center axes
+    const centerX = width / 2;
+    const centerY = height / 2;
+    
+    // x-axis (m)
+    ctx.beginPath();
+    ctx.moveTo(0, centerY);
+    ctx.lineTo(width, centerY);
+    ctx.stroke();
+    
+    // y-axis (c)
+    ctx.beginPath();
+    ctx.moveTo(centerX, 0);
+    ctx.lineTo(centerX, height);
+    ctx.stroke();
+    
+    // Label the axes
+    ctx.fillStyle = '#888';
+    ctx.font = '12px Arial';
+    ctx.fillText('m (slope)', width / 2, height - 5);
+    
+    // Rotate and draw the c axis label
+    ctx.save();
+    ctx.translate(5, height / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('c (y-intercept)', 0, 0);
     ctx.restore();
 }
 
@@ -164,22 +229,44 @@ function draw(e) {
     } 
     else if (currentCanvas === 'hough' && e.target === houghCanvas) {
         // Draw in Hough space
-        const thetaIndex = Math.floor((x / houghWidth) * thetaResolution);
-        const rhoIndex = Math.floor((y / houghHeight) * rhoResolution);
-        
-        if (thetaIndex >= 0 && thetaIndex < thetaResolution && 
-            rhoIndex >= 0 && rhoIndex < rhoResolution) {
+        if (currentHoughType === 'rhoTheta') {
+            const thetaIndex = Math.floor((x / houghWidth) * thetaResolution);
+            const rhoIndex = Math.floor((y / houghHeight) * rhoResolution);
             
-            houghCtx.fillStyle = 'rgba(0, 0, 255, 0.7)';
-            houghCtx.beginPath();
-            houghCtx.arc(x, y, 5, 0, Math.PI * 2);
-            houghCtx.fill();
+            if (thetaIndex >= 0 && thetaIndex < thetaResolution && 
+                rhoIndex >= 0 && rhoIndex < rhoResolution) {
+                
+                houghCtx.fillStyle = 'rgba(0, 0, 255, 0.7)';
+                houghCtx.beginPath();
+                houghCtx.arc(x, y, 5, 0, Math.PI * 2);
+                houghCtx.fill();
+                
+                // Update hough space
+                houghSpaceRhoTheta[thetaIndex][rhoIndex] = 1;
+                
+                // Calculate inverse Hough transform from rho-theta
+                calculateInverseHoughTransformRhoTheta(thetaIndex, rhoIndex);
+            }
+        } 
+        else if (currentHoughType === 'mc') {
+            // Map canvas coordinates to m-c parameter space
+            const mIndex = Math.floor((x / houghWidth) * mResolution);
+            const cIndex = Math.floor((y / houghHeight) * cResolution);
             
-            // Update hough space
-            houghSpace[thetaIndex][rhoIndex] = 1;
-            
-            // Calculate inverse Hough transform
-            calculateInverseHoughTransform(thetaIndex, rhoIndex);
+            if (mIndex >= 0 && mIndex < mResolution && 
+                cIndex >= 0 && cIndex < cResolution) {
+                
+                houghCtx.fillStyle = 'rgba(0, 0, 255, 0.7)';
+                houghCtx.beginPath();
+                houghCtx.arc(x, y, 5, 0, Math.PI * 2);
+                houghCtx.fill();
+                
+                // Update hough space
+                houghSpaceMC[mIndex][cIndex] = 1;
+                
+                // Calculate inverse Hough transform from m-c
+                calculateInverseHoughTransformMC(mIndex, cIndex);
+            }
         }
     }
     
@@ -201,7 +288,7 @@ function calculateHoughTransform(x1, y1, x2, y2) {
         const xCentered = point.x - imageWidth / 2;
         const yCentered = imageHeight / 2 - point.y; // Flip y-axis
         
-        // For each theta value
+        // Calculate rho-theta transform
         for (let thetaIdx = 0; thetaIdx < thetaResolution; thetaIdx++) {
             const theta = (thetaIdx / thetaResolution) * Math.PI; // 0 to π
             
@@ -212,7 +299,25 @@ function calculateHoughTransform(x1, y1, x2, y2) {
             const rhoIdx = Math.floor((rho + rhoResolution/2) / rhoResolution * houghHeight);
             
             if (rhoIdx >= 0 && rhoIdx < houghHeight) {
-                houghSpace[thetaIdx][rhoIdx] += 1;
+                houghSpaceRhoTheta[thetaIdx][rhoIdx] += 1;
+            }
+        }
+        
+        // Calculate m-c transform for non-vertical lines
+        // For each point, all possible lines through it are y = mx + c
+        // This gives c = y - mx
+        for (let mIdx = 0; mIdx < mResolution; mIdx++) {
+            // Map mIdx to actual m value (slope)
+            const m = ((mIdx / mResolution) * (2 * mRange)) - mRange;
+            
+            // Calculate c = y - mx
+            const c = yCentered - (m * xCentered);
+            
+            // Map c to cIndex (centered)
+            const cIdx = Math.floor(((c + cRange) / (2 * cRange)) * cResolution);
+            
+            if (cIdx >= 0 && cIdx < cResolution) {
+                houghSpaceMC[mIdx][cIdx] += 1;
             }
         }
     }
@@ -251,40 +356,76 @@ function updateHoughCanvas() {
     // Clear the Hough canvas
     houghCtx.fillStyle = 'white';
     houghCtx.fillRect(0, 0, houghWidth, houghHeight);
-    drawHoughSpaceGrid(houghCtx, houghWidth, houghHeight);
     
-    // Find the maximum value in the Hough space for normalization
-    let maxVal = 1;
-    for (let i = 0; i < thetaResolution; i++) {
-        for (let j = 0; j < rhoResolution; j++) {
-            if (houghSpace[i][j] > maxVal) {
-                maxVal = houghSpace[i][j];
+    if (currentHoughType === 'rhoTheta') {
+        drawHoughSpaceGridRhoTheta(houghCtx, houghWidth, houghHeight);
+        
+        // Find the maximum value in the Hough space for normalization
+        let maxVal = 1;
+        for (let i = 0; i < thetaResolution; i++) {
+            for (let j = 0; j < rhoResolution; j++) {
+                if (houghSpaceRhoTheta[i][j] > maxVal) {
+                    maxVal = houghSpaceRhoTheta[i][j];
+                }
             }
         }
-    }
-    
-    // Draw the Hough space
-    for (let thetaIdx = 0; thetaIdx < thetaResolution; thetaIdx++) {
-        const x = (thetaIdx / thetaResolution) * houghWidth;
         
-        for (let rhoIdx = 0; rhoIdx < rhoResolution; rhoIdx++) {
-            const value = houghSpace[thetaIdx][rhoIdx];
+        // Draw the Hough space for rho-theta
+        for (let thetaIdx = 0; thetaIdx < thetaResolution; thetaIdx++) {
+            const x = (thetaIdx / thetaResolution) * houghWidth;
             
-            if (value > 0) {
-                const y = (rhoIdx / rhoResolution) * houghHeight;
-                const intensity = Math.min(value / maxVal, 1);
+            for (let rhoIdx = 0; rhoIdx < rhoResolution; rhoIdx++) {
+                const value = houghSpaceRhoTheta[thetaIdx][rhoIdx];
                 
-                // Draw with varying intensity
-                houghCtx.fillStyle = `rgba(0, 0, 255, ${intensity * 0.7})`;
-                houghCtx.beginPath();
-                houghCtx.arc(x, y, 2, 0, Math.PI * 2);
-                houghCtx.fill();
+                if (value > 0) {
+                    const y = (rhoIdx / rhoResolution) * houghHeight;
+                    const intensity = Math.min(value / maxVal, 1);
+                    
+                    // Draw with varying intensity
+                    houghCtx.fillStyle = `rgba(0, 0, 255, ${intensity * 0.7})`;
+                    houghCtx.beginPath();
+                    houghCtx.arc(x, y, 2, 0, Math.PI * 2);
+                    houghCtx.fill();
+                }
+            }
+        }
+    } 
+    else if (currentHoughType === 'mc') {
+        drawHoughSpaceGridMC(houghCtx, houghWidth, houghHeight);
+        
+        // Find the maximum value in the MC space for normalization
+        let maxVal = 1;
+        for (let i = 0; i < mResolution; i++) {
+            for (let j = 0; j < cResolution; j++) {
+                if (houghSpaceMC[i][j] > maxVal) {
+                    maxVal = houghSpaceMC[i][j];
+                }
+            }
+        }
+        
+        // Draw the Hough space for m-c
+        for (let mIdx = 0; mIdx < mResolution; mIdx++) {
+            const x = (mIdx / mResolution) * houghWidth;
+            
+            for (let cIdx = 0; cIdx < cResolution; cIdx++) {
+                const value = houghSpaceMC[mIdx][cIdx];
+                
+                if (value > 0) {
+                    const y = (cIdx / cResolution) * houghHeight;
+                    const intensity = Math.min(value / maxVal, 1);
+                    
+                    // Draw with varying intensity
+                    houghCtx.fillStyle = `rgba(0, 0, 255, ${intensity * 0.7})`;
+                    houghCtx.beginPath();
+                    houghCtx.arc(x, y, 2, 0, Math.PI * 2);
+                    houghCtx.fill();
+                }
             }
         }
     }
 }
 
-function calculateInverseHoughTransform(thetaIdx, rhoIdx) {
+function calculateInverseHoughTransformRhoTheta(thetaIdx, rhoIdx) {
     // Map indices to actual theta and rho values
     const theta = (thetaIdx / thetaResolution) * Math.PI; // 0 to π
     const rho = ((rhoIdx / houghHeight) * rhoResolution) - (rhoResolution/2);
@@ -325,6 +466,36 @@ function calculateInverseHoughTransform(thetaIdx, rhoIdx) {
     imageCtx.stroke();
 }
 
+function calculateInverseHoughTransformMC(mIdx, cIdx) {
+    // Map indices to actual m and c values
+    const m = ((mIdx / mResolution) * (2 * mRange)) - mRange;
+    const c = ((cIdx / cResolution) * (2 * cRange)) - cRange;
+    
+    // Clear the image canvas and redraw grid
+    imageCtx.fillStyle = 'white';
+    imageCtx.fillRect(0, 0, imageWidth, imageHeight);
+    drawGridLines(imageCtx, imageWidth, imageHeight);
+    
+    // We need two points to draw a line in the form y = mx + c
+    // Convert to image coordinates (with origin at center)
+    const centerX = imageWidth / 2;
+    const centerY = imageHeight / 2;
+    
+    // Calculate two points for the line
+    const x1 = 0;
+    const y1 = centerY - (m * (-centerX) + c);
+    const x2 = imageWidth;
+    const y2 = centerY - (m * (imageWidth - centerX) + c);
+    
+    // Draw the line
+    imageCtx.strokeStyle = 'blue';
+    imageCtx.lineWidth = 2;
+    imageCtx.beginPath();
+    imageCtx.moveTo(x1, y1);
+    imageCtx.lineTo(x2, y2);
+    imageCtx.stroke();
+}
+
 // Button event listeners
 drawImageBtn.addEventListener('click', () => {
     currentCanvas = 'image';
@@ -344,12 +515,19 @@ clearImageBtn.addEventListener('click', () => {
     imageCtx.fillRect(0, 0, imageWidth, imageHeight);
     drawGridLines(imageCtx, imageWidth, imageHeight);
     
-    // Clear the Hough space and redraw the Hough canvas
+    // Clear both Hough spaces
     for (let i = 0; i < thetaResolution; i++) {
         for (let j = 0; j < rhoResolution; j++) {
-            houghSpace[i][j] = 0;
+            houghSpaceRhoTheta[i][j] = 0;
         }
     }
+    
+    for (let i = 0; i < mResolution; i++) {
+        for (let j = 0; j < cResolution; j++) {
+            houghSpaceMC[i][j] = 0;
+        }
+    }
+    
     updateHoughCanvas();
 });
 
@@ -357,12 +535,22 @@ clearHoughBtn.addEventListener('click', () => {
     // Clear the Hough canvas
     houghCtx.fillStyle = 'white';
     houghCtx.fillRect(0, 0, houghWidth, houghHeight);
-    drawHoughSpaceGrid(houghCtx, houghWidth, houghHeight);
     
-    // Clear the Hough space
-    for (let i = 0; i < thetaResolution; i++) {
-        for (let j = 0; j < rhoResolution; j++) {
-            houghSpace[i][j] = 0;
+    if (currentHoughType === 'rhoTheta') {
+        drawHoughSpaceGridRhoTheta(houghCtx, houghWidth, houghHeight);
+        // Clear the rho-theta Hough space
+        for (let i = 0; i < thetaResolution; i++) {
+            for (let j = 0; j < rhoResolution; j++) {
+                houghSpaceRhoTheta[i][j] = 0;
+            }
+        }
+    } else if (currentHoughType === 'mc') {
+        drawHoughSpaceGridMC(houghCtx, houghWidth, houghHeight);
+        // Clear the m-c Hough space
+        for (let i = 0; i < mResolution; i++) {
+            for (let j = 0; j < cResolution; j++) {
+                houghSpaceMC[i][j] = 0;
+            }
         }
     }
     
@@ -370,4 +558,12 @@ clearHoughBtn.addEventListener('click', () => {
     imageCtx.fillStyle = 'white';
     imageCtx.fillRect(0, 0, imageWidth, imageHeight);
     drawGridLines(imageCtx, imageWidth, imageHeight);
+});
+
+// Hough type radio button event listeners
+houghTypeRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        currentHoughType = e.target.value;
+        updateHoughCanvas();
+    });
 });

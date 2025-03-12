@@ -44,6 +44,16 @@ canvas {
     margin: 10px 0;
 }
 
+.hough-selection {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.hough-selection label {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
 button {
     padding: 8px 12px;
     margin: 0 5px;

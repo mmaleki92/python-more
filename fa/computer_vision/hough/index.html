@@ -21,7 +21,17 @@
             </div>
             
             <div class="canvas-wrapper">
-                <h2>Hough Space (ρ-θ)</h2>
+                <h2>Hough Space</h2>
+                <div class="hough-selection">
+                    <label>
+                        <input type="radio" name="houghType" value="rhoTheta" checked> 
+                        ρ-θ Space
+                    </label>
+                    <label>
+                        <input type="radio" name="houghType" value="mc"> 
+                        m-c Space (y=mx+c)
+                    </label>
+                </div>
                 <canvas id="houghCanvas" width="400" height="400"></canvas>
                 <div class="controls">
                     <button id="drawHoughBtn">Draw in Hough Space</button>
@@ -34,7 +44,9 @@
             <h3>Instructions</h3>
             <p>Draw in either canvas to see the transform in the other canvas.</p>
             <p>• Image Space: Points and lines in Cartesian coordinates (x,y)</p>
-            <p>• Hough Space: Lines represented in polar coordinates (ρ,θ)</p>
+            <p>• ρ-θ Space: Lines represented in polar coordinates as ρ = x·cos(θ) + y·sin(θ)</p>
+            <p>• m-c Space: Lines represented in slope-intercept form as y = mx + c</p>
+            <p><strong>Note:</strong> m-c form cannot represent vertical lines (infinite slope)</p>
         </div>
     </div>
     <script src="script.js"></script>
