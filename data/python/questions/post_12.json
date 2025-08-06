@@ -28,6 +28,13 @@
             "id": 3,
             "textarea": true,
             "upload_area": false
+        },
+        {
+            "title": "asasfasf",
+            "content": "asvassf<pre><code class='language-python'>asfasfasf</code></pre>",
+            "textarea": true,
+            "upload_area": false,
+            "id": 4
         }
     ]
 }

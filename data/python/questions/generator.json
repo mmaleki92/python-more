@@ -1,0 +1,47 @@
+{
+    "metadata": {
+        "version": "1.0.0",
+        "author": "Morteza Maleki",
+        "date_created": "N/A",
+        "description": "در این قسمت تمرین‌ّایی از مبحث جنریتور انجام می‌دهیم. ",
+        "category": "python",
+        "title": "generator"
+    },
+    "questions": [
+        {
+            "title": " توابع ساده",
+            "content": "یک تابع به نام `say_hello` بنویسید که نام کاربر را دریافت کرده و پیام سلام را چاپ کند.\r\n<pre><code class='language-python'>\r\n# مثال\r\ndef say_hello(name):\r\n    print(f\"سلام {name}!\")\r\n\r\nsay_hello(\"علی\")  # خروجی: سلام علی!</code></pre>",
+            "textarea": false,
+            "upload_area": true,
+            "id": 1
+        },
+        {
+            "title": "توابع با لیست و حلقه",
+            "content": "تابعی بنویسید که یک لیست از اعداد را گرفته و لیستی از مجذور همان اعداد را برگرداند.\r\n<pre><code class='language-python'>numbers = [1, 2, 3, 4, 5]\r\nsquares = square_numbers(numbers)  # [1, 4, 9, 16, 25]</code></pre>",
+            "textarea": false,
+            "upload_area": true,
+            "id": 2
+        },
+        {
+            "title": " جنریتورها (Generators)",
+            "content": "جنریتور (Generator) چیست و چه تفاوتی با توابع معمولی دارد؟\r\n",
+            "textarea": true,
+            "upload_area": false,
+            "id": 3
+        },
+        {
+            "title": "ساخت جنریتور",
+            "content": "تابع `square_numbers` از سوال بالا را به یک جنریتور تبدیل کنید. (توجه: از yield استفاده کنید)\r\n",
+            "textarea": false,
+            "upload_area": true,
+            "id": 4
+        },
+        {
+            "title": "یک جنریتور بنویسید که اعداد فیبوناچی را تا یک محدوده مشخص تولید کند.",
+            "content": "مثال استفاده از جنریتور  فیبوناچی:\r\n<pre><code class='language-python'>for num in fibonacci_gen(100):\r\n    print(num)  # </code></pre>",
+            "textarea": false,
+            "upload_area": true,
+            "id": 5
+        }
+    ]
+}

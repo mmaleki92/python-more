@@ -73,5 +73,10 @@
         "title": "شی گرایی (oop)",
         "description": "تمرین‌های شی‌گرایی و برنامه نویسی شی گرا",
         "file_path": "posts/post_16.html"
+    },
+    {
+        "title": "generator",
+        "description": "در این قسمت تمرین‌هایی از مبحث جنریتور انجام می‌دهیم. ",
+        "file_path": "posts/generator.html"
     }
 ]
