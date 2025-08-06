@@ -1,0 +1,120 @@
+/* ===== Comprehensive Layout Fix ===== */
+
+/* First, make sure we start with a proper page layout */
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Full viewport height */
+}
+
+/* Main content area should take available space */
+.site-main {
+    flex: 1 0 auto;
+    /* Grow to fill available space */
+}
+
+/* Footer should stay at bottom */
+.site-footer {
+    flex-shrink: 0;
+    /* Don't shrink */
+    margin-top: auto;
+    /* Push to bottom if content is short */
+}
+
+/* Fix container layout */
+.site-main .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.content-area {
+    flex: 1;
+    min-width: 0;
+    /* Prevent flex item from overflowing */
+}
+
+.sidebar {
+    width: 30%;
+    padding-right: 0;
+}
+
+/* Make sure all floats are cleared */
+.clearfix::after,
+.site-main .container::after,
+.post-content-wrap::after,
+.posts-grid::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Remove any float that's causing issues */
+.content-area,
+.sidebar {
+    float: none;
+    /* Override any float declarations */
+}
+
+/* Update responsive styles */
+@media (max-width: 992px) {
+    .site-main .container {
+        flex-direction: column;
+    }
+
+    .content-area,
+    .sidebar {
+        width: 100%;
+    }
+
+    .sidebar {
+        margin-top: 3rem;
+    }
+}
+
+/* Make sure the footer widgets layout works properly too */
+.footer-widgets {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-bottom: 3rem;
+}
+
+/* Update widget styling for consistency */
+.widget {
+    margin-bottom: 3rem;
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-normal);
+}
+
+.footer-widget {
+    margin-bottom: 2rem;
+    background-color: transparent;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+/* Ensure post content areas have proper clearing */
+.post-content-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 3rem 0;
+    width: 100%;
+}
+
+.single-post .post-content {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+}

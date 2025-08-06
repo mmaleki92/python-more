@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>راهنمای کامل شبکه‌های عصبی عمیق و کاربردهای آن - وبلاگ . مالکی</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> -->
+    <link rel="stylesheet" href="assets/css/sidebar-fix.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/layout-fix.css">
+    <link rel="stylesheet" href="assets/css/grid-fix.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body class="single-post">
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="site-branding">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon"><i class="fas fa-brain"></i></span>
+                        <span class="logo-text">وبلاگ </span>
+                    </a>
+                </div>
+
+                <nav class="main-navigation">
+                    <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                        <span class="sr-only">منو</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <ul class="menu">
+                        <li><a href="index.html">خانه</a></li>
+                        <li><a href="about.html">درباره من</a></li>
+                        <li class="has-children">
+                            <a href="#">موضوعات</a>
+                            <ul class="sub-menu">
+                                <li><a href="#">یادگیری عمیق</a></li>
+                                <li><a href="#">یادگیری ماشین</a></li>
+                                <li><a href="#">هوش مصنوعی</a></li>
+                                <li><a href="#">پردازش تصویر</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="contact.html">تماس با من</a></li>
+                    </ul>
+                </nav>
+
+                <div class="header-actions">
+                    <button class="search-toggle" aria-expanded="false">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="search-overlay">
+                <form class="search-form" role="search" method="get" action="#">
+                    <input type="search" class="search-field" placeholder="جستجو..." name="s">
+                    <button type="submit" class="search-submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="search-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <article class="single-article">
+            <header class="post-header">
+                <div class="container">
+                    <div class="post-categories">
+                        <a href="#">یادگیری عمیق</a>
+                        <a href="#">هوش مصنوعی</a>
+                    </div>
+                    <h1 class="post-title">راهنمای کامل شبکه‌های عصبی عمیق و کاربردهای آن در سال ۱۴۰۴</h1>
+                    <div class="post-meta">
+                        <div class="post-author">
+                            <img src="https://via.placeholder.com/50" alt="مالکی" class="author-avatar">
+                            <span>نوشته <a href="#">مالکی</a></span>
+                        </div>
+                        <div class="post-details">
+                            <span class="post-date"><i class="far fa-calendar-alt"></i> ۱۲ فروردین ۱۴۰۴</span>
+                            <span class="post-reading-time"><i class="far fa-clock"></i> زمان مطالعه: ۱۵ دقیقه</span>
+                            <span class="post-comments"><i class="far fa-comment"></i> ۲۴ دیدگاه</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="post-featured-image">
+                <img src="https://via.placeholder.com/1200x500" alt="شبکه‌های عصبی عمیق">
+            </div>
+
+            <div class="container">
+                <div class="post-content-wrap">
+                    <div class="post-content">
+                        <p class="lead">در این مقاله جامع به بررسی آخرین پیشرفت‌های شبکه‌های عصبی عمیق می‌پردازیم و نحوه
+                            استفاده از آن‌ها در پروژه‌های کاربردی را توضیح می‌دهیم. از مفاهیم اولیه تا تکنیک‌های
+                            پیشرفته، همه چیز را پوشش خواهیم داد.</p>
+
+                        <p>شبکه‌های عصبی عمیق (Deep Neural Networks) یکی از پیشرفته‌ترین تکنیک‌های یادگیری ماشین هستند
+                            که در سال‌های اخیر انقلابی در حوزه هوش مصنوعی ایجاد کرده‌اند. این شبکه‌ها با الهام از ساختار
+                            مغز انسان طراحی شده‌اند و قادر به یادگیری الگوهای پیچیده از داده‌ها هستند.</p>
+
+                        <h2>مفاهیم اساسی شبکه‌های عصبی</h2>
+
+                        <p>در ابتدا با مفاهیم اصلی شبکه‌های عصبی آشنا می‌شویم:</p>
+
+                        <h3>۱. نورون‌ها (Neurons)</h3>
+                        <p>نورون‌ها واحدهای پردازشی اصلی در شبکه‌های عصبی هستند. هر نورون ورودی‌های متعددی را دریافت
+                            کرده و پس از اعمال یک تابع ریاضی، یک خروجی تولید می‌کند. در شبکه‌های عصبی، نورون‌ها در
+                            لایه‌های مختلفی سازماندهی می‌شوند.</p>
+
+                        <div class="post-image-wrap">
+                            <img src="https://via.placeholder.com/800x400" alt="ساختار نورون مصنوعی">
+                            <span class="image-caption">شکل ۱: ساختار یک نورون مصنوعی</span>
+                        </div>
+
+                        <h3>۲. لایه‌ها (Layers)</h3>
+                        <p>شبکه‌های عصبی از چندین لایه تشکیل شده‌اند:</p>
+
+                        <ul>
+                            <li><strong>لایه ورودی (Input Layer):</strong> دریافت داده‌های اولیه</li>
+                            <li><strong>لایه‌های پنهان (Hidden Layers):</strong> پردازش داده‌ها و استخراج ویژگی‌ها</li>
+                            <li><strong>لایه خروجی (Output Layer):</strong> تولید نتیجه نهایی</li>
+                        </ul>
+
+                        <p>آنچه شبکه‌های عصبی را "عمیق" می‌سازد، وجود چندین لایه پنهان است. این ساختار چندلایه به
+                            شبکه‌ها امکان می‌دهد ویژگی‌های پیچیده‌تری را از داده‌ها استخراج کنند.</p>
+
+                        <blockquote>
+                            <p>یادگیری عمیق با افزایش تعداد لایه‌های شبکه، توانایی مدل‌سازی روابط پیچیده‌تر و غیرخطی را
+                                فراهم می‌کند.</p>
+                            <cite>— پروفسور یان لکان، از پیشگامان یادگیری عمیق</cite>
+                        </blockquote>
+
+                        <h2>انواع شبکه‌های عصبی عمیق</h2>
+
+                        <p>شبکه‌های عصبی عمیق انواع مختلفی دارند که هر کدام برای حل مسائل خاصی مناسب هستند:</p>
+
+                        <h3>۱. شبکه‌های عصبی کانولوشنی (CNNs)</h3>
+                        <p>شبکه‌های عصبی کانولوشنی برای پردازش داده‌های شبکه‌ای مانند تصاویر طراحی شده‌اند. آن‌ها از
+                            عملیات کانولوشن برای استخراج ویژگی‌های مکانی استفاده می‌کنند. کاربردهای اصلی CNNها شامل:</p>
+
+                        <ul>
+                            <li>تشخیص و طبقه‌بندی تصاویر</li>
+                            <li>تشخیص چهره</li>
+                            <li>تشخیص اشیاء</li>
+                            <li>پردازش تصاویر پزشکی</li>
+                        </ul>
+
+                        <h3>۲. شبکه‌های عصبی بازگشتی (RNNs)</h3>
+                        <p>شبکه‌های عصبی بازگشتی برای پردازش داده‌های توالی مانند متن، صدا یا سری‌های زمانی طراحی
+                            شده‌اند. آن‌ها دارای حلقه‌های بازخورد هستند که به آن‌ها امکان می‌دهد اطلاعات قبلی را به یاد
+                            داشته باشند.</p>
+
+                        <p>نسخه‌های پیشرفته RNN شامل LSTM (حافظه کوتاه-مدت طولانی) و GRU هستند که مشکلات محو شدن گرادیان
+                            در RNNهای ساده را برطرف می‌کنند.</p>
+
+                        <div class="code-block">
+                            <pre><code class="language-python"># نمونه کد پایتون برای ایجاد یک مدل LSTM در TensorFlow
+import tensorflow as tf
+
+model = tf.keras.Sequential([
+    tf.keras.layers.LSTM(128, input_shape=(sequence_length, features)),
+    tf.keras.layers.Dense(64, activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+model.compile(optimizer='adam',
+              loss='categorical_crossentropy',
+              metrics=['accuracy'])</code></pre>
+                        </div>
+
+                        <h3>۳. شبکه‌های عصبی خودرمزنگار (Autoencoders)</h3>
+                        <p>خودرمزنگارها شبکه‌هایی هستند که برای یادگیری بازنمایی‌های فشرده از داده‌ها طراحی شده‌اند.
+                            آن‌ها از یک ساختار ساعت شنی استفاده می‌کنند که شامل دو بخش است:</p>
+
+                        <ul>
+                            <li><strong>رمزگذار (Encoder):</strong> داده‌های ورودی را به یک بازنمایی فشرده تبدیل می‌کند
+                            </li>
+                            <li><strong>رمزگشا (Decoder):</strong> بازنمایی فشرده را به بازسازی داده‌های اصلی تبدیل
+                                می‌کند</li>
+                        </ul>
+
+                        <p>خودرمزنگارها برای کاهش ابعاد داده، تشخیص ناهنجاری و تولید داده استفاده می‌شوند.</p>
+
+                        <h2>تکنیک‌های پیشرفته در یادگیری عمیق</h2>
+
+                        <h3>۱. انتقال یادگیری (Transfer Learning)</h3>
+                        <p>انتقال یادگیری یک تکنیک قدرتمند است که به شما امکان می‌دهد از مدل‌های از پیش آموزش‌دیده برای
+                            وظایف جدید استفاده کنید. این روش به ویژه زمانی مفید است که داده‌های کافی برای آموزش یک مدل
+                            عمیق از صفر ندارید.</p>
+
+                        <h3>۲. یادگیری تقویتی عمیق (Deep Reinforcement Learning)</h3>
+                        <p>یادگیری تقویتی عمیق ترکیبی از یادگیری عمیق و یادگیری تقویتی است. در این رویکرد، عامل‌ها از
+                            طریق تعامل با محیط و دریافت پاداش یاد می‌گیرند. این تکنیک در بازی‌های ویدیویی، رباتیک و
+                            خودروهای خودران کاربرد دارد.</p>
+
+                        <div class="alert info-box">
+                            <p><strong>نکته:</strong> یادگیری تقویتی عمیق در سال ۲۰۱۶ توجه زیادی را به خود جلب کرد،
+                                زمانی که الگوریتم AlphaGo شرکت DeepMind توانست قهرمان جهانی بازی گو را شکست دهد.</p>
+                        </div>
+
+                        <h2>چالش‌ها و راه‌حل‌های یادگیری عمیق</h2>
+
+                        <p>با وجود پیشرفت‌های قابل توجه، یادگیری عمیق هنوز با چالش‌هایی مواجه است:</p>
+
+                        <h3>۱. نیاز به داده‌های زیاد</h3>
+                        <p>شبکه‌های عصبی عمیق معمولاً به مقادیر زیادی داده برای آموزش مؤثر نیاز دارند. برای غلبه بر این
+                            مشکل می‌توان از روش‌هایی مانند افزایش داده (Data Augmentation) یا انتقال یادگیری استفاده
+                            کرد.</p>
+
+                        <h3>۲. بیش‌برازش (Overfitting)</h3>
+                        <p>بیش‌برازش زمانی اتفاق می‌افتد که مدل روی داده‌های آموزشی بیش از حد متخصص می‌شود و نمی‌تواند
+                            خوب تعمیم دهد. راهکارهای مقابله با بیش‌برازش شامل:</p>
+
+                        <ul>
+                            <li><strong>Dropout:</strong> غیرفعال کردن تصادفی نورون‌ها در طول آموزش</li>
+                            <li><strong>تنظیم وزن (Weight Regularization):</strong> محدود کردن مقادیر وزن‌ها</li>
+                            <li><strong>Early Stopping:</strong> توقف آموزش قبل از بیش‌برازش</li>
+                            <li><strong>استفاده از داده‌های بیشتر</strong></li>
+                        </ul>
+
+                        <h3>۳. جعبه سیاه بودن</h3>
+                        <p>شبکه‌های عصبی عمیق اغلب به عنوان "جعبه سیاه" شناخته می‌شوند زیرا درک دلیل تصمیمات آن‌ها دشوار
+                            است. محققان در حال کار روی روش‌هایی برای تفسیرپذیر کردن این مدل‌ها هستند.</p>
+
+                        <h2>کاربردهای عملی شبکه‌های عصبی عمیق</h2>
+
+                        <p>شبکه‌های عصبی عمیق در بسیاری از زمینه‌ها کاربرد دارند:</p>
+
+                        <div class="post-image-wrap">
+                            <img src="https://via.placeholder.com/800x400" alt="کاربردهای یادگیری عمیق">
+                            <span class="image-caption">شکل ۲: کاربردهای متنوع یادگیری عمیق در صنایع مختلف</span>
+                        </div>
+
+                        <h3>پردازش زبان طبیعی</h3>
+                        <p>شبکه‌های عصبی عمیق انقلابی در پردازش زبان طبیعی (NLP) ایجاد کرده‌اند. مدل‌هایی مانند BERT،
+                            GPT و T5 امکان درک و تولید متن انسانی را فراهم می‌کنند. کاربردهای NLP شامل:</p>
+
+                        <ul>
+                            <li>ترجمه ماشینی</li>
+                            <li>پاسخگویی به سؤالات</li>
+                            <li>خلاصه‌سازی متن</li>
+                            <li>تحلیل احساسات</li>
+                            <li>چت‌بات‌ها و دستیارهای مجازی</li>
+                        </ul>
+
+                        <h3>بینایی کامپیوتری</h3>
+                        <p>در حوزه بینایی کامپیوتری، شبکه‌های عصبی عمیق به پیشرفت‌های قابل توجهی دست یافته‌اند، از جمله:
+                        </p>
+
+                        <ul>
+                            <li>تشخیص چهره و اشیاء</li>
+                            <li>قطعه‌بندی تصویر</li>
+                            <li>تولید تصویر</li>
+                            <li>تشخیص لبه و ویژگی‌ها</li>
+                            <li>بازیابی تصویر</li>
+                        </ul>
+
+                        <h3>پزشکی و سلامت</h3>
+                        <p>یادگیری عمیق در تشخیص پزشکی و کشف دارو انقلابی ایجاد کرده است. برخی از کاربردها عبارتند از:
+                        </p>
+
+                        <ul>
+                            <li>تشخیص بیماری از تصاویر پزشکی</li>
+                            <li>پیش‌بینی ساختار پروتئین</li>
+                            <li>کشف دارو</li>
+                            <li>آنالیز داده‌های ژنومی</li>
+                            <li>پیش‌بینی بیماری‌ها</li>
+                        </ul>
+
+                        <h2>آینده یادگیری عمیق</h2>
+
+                        <p>یادگیری عمیق همچنان در حال تکامل است و روندهای جدیدی در افق دیده می‌شود:</p>
+
+                        <h3>۱. یادگیری با داده کم (Few-shot Learning)</h3>
+                        <p>روش‌هایی که به مدل‌ها امکان می‌دهند با تعداد کمی نمونه آموزشی یاد بگیرند، به سرعت در حال
+                            پیشرفت هستند.</p>
+
+                        <h3>۲. یادگیری خودنظارتی (Self-supervised Learning)</h3>
+                        <p>این روش‌ها به مدل‌ها امکان می‌دهند از داده‌های بدون برچسب یاد بگیرند، که دسترسی به آن‌ها
+                            آسان‌تر است.</p>
+
+                        <h3>۳. مدل‌های بزرگ چندمنظوره</h3>
+                        <p>مدل‌های بزرگی مانند GPT و CLIP که می‌توانند وظایف متنوعی را انجام دهند، احتمالاً در سال‌های
+                            آینده بیشتر توسعه خواهند یافت.</p>
+
+                        <h3>۴. هوش مصنوعی قابل اعتماد و اخلاقی</h3>
+                        <p>با گسترش کاربرد هوش مصنوعی، نیاز به سیستم‌های شفاف، قابل اعتماد و عادلانه بیشتر احساس می‌شود.
+                        </p>
+
+                        <h2>نتیجه‌گیری</h2>
+
+                        <p>شبکه‌های عصبی عمیق تحولی اساسی در حوزه هوش مصنوعی ایجاد کرده‌اند و کاربردهای آن‌ها همچنان در
+                            حال گسترش است. با پیشرفت فناوری و افزایش قدرت محاسباتی، انتظار می‌رود که این مدل‌ها حتی
+                            قدرتمندتر و کارآمدتر شوند.</p>
+
+                        <p>در این مقاله، مروری جامع بر مفاهیم، تکنیک‌ها و کاربردهای شبکه‌های عصبی عمیق داشتیم. امیدواریم
+                            این اطلاعات به شما کمک کند تا درک بهتری از این حوزه هیجان‌انگیز داشته باشید.</p>
+
+                        <div class="post-tags">
+                            <span class="tags-title">برچسب‌ها:</span>
+                            <a href="#">یادگیری عمیق</a>
+                            <a href="#">شبکه عصبی</a>
+                            <a href="#">هوش مصنوعی</a>
+                            <a href="#">بینایی کامپیوتر</a>
+                            <a href="#">پردازش زبان طبیعی</a>
+                        </div>
+
+                        <div class="post-share">
+                            <span class="share-title">اشتراک‌گذاری:</span>
+                            <a href="#" class="share-link"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="share-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="share-link"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="share-link"><i class="fab fa-telegram"></i></a>
+                            <a href="#" class="share-link"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="author-bio">
+                        <div class="author-avatar">
+                            <img src="https://via.placeholder.com/100" alt="مالکی">
+                        </div>
+                        <div class="author-info">
+                            <h3 class="author-name">مالکی</h3>
+                            <p class="author-description">
+                                استاد هوش مصنوعی و یادگیری ماشین با بیش از ۱۰ سال تجربه در زمینه‌های مختلف پژوهشی و
+                                صنعتی. نویسنده چندین کتاب و مقاله علمی در زمینه یادگیری عمیق و پردازش تصویر.
+                            </p>
+                            <div class="author-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                                <a href="#"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <nav class="post-navigation">
+                        <div class="nav-links">
+                            <div class="nav-previous">
+                                <a href="#">
+                                    <span class="nav-subtitle"><i class="fas fa-arrow-right"></i> مقاله قبلی</span>
+                                    <span class="nav-title">الگوریتم‌های محبوب یادگیری ماشین در سال ۱۴۰۴</span>
+                                </a>
+                            </div>
+                            <div class="nav-next">
+                                <a href="#">
+                                    <span class="nav-subtitle">مقاله بعدی <i class="fas fa-arrow-left"></i></span>
+                                    <span class="nav-title">آموزش کامل کتابخانه TensorFlow در پایتون</span>
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <div class="related-posts">
+                        <h3 class="section-title">مقالات مرتبط</h3>
+                        <div class="related-posts-grid">
+                            <div class="related-post">
+                                <a href="#" class="post-thumbnail">
+                                    <img src="https://via.placeholder.com/300x200" alt="مقاله مرتبط">
+                                </a>
+                                <h4 class="post-title"><a href="#">معرفی معماری‌های پیشرفته شبکه‌های عصبی کانولوشنی</a>
+                                </h4>
+                                <span class="post-date">۱۵ اسفند ۱۴۰۳</span>
+                            </div>
+                            <div class="related-post">
+                                <a href="#" class="post-thumbnail">
+                                    <img src="https://via.placeholder.com/300x200" alt="مقاله مرتبط">
+                                </a>
+                                <h4 class="post-title"><a href="#">پردازش زبان طبیعی فارسی با استفاده از مدل‌های زبانی
+                                        بزرگ</a></h4>
+                                <span class="post-date">۵ اسفند ۱۴۰۳</span>
+                            </div>
+                            <div class="related-post">
+                                <a href="#" class="post-thumbnail">
+                                    <img src="https://via.placeholder.com/300x200" alt="مقاله مرتبط">
+                                </a>
+                                <h4 class="post-title"><a href="#">یادگیری تقویتی عمیق و کاربردهای آن</a></h4>
+                                <span class="post-date">۲۰ بهمن ۱۴۰۳</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="comments" class="comments-area">
+                        <h3 class="comments-title">۲۴ دیدگاه</h3>
+
+                        <ol class="comment-list">
+                            <li class="comment">
+                                <article class="comment-body">
+                                    <div class="comment-meta">
+                                        <div class="comment-author">
+                                            <img src="https://via.placeholder.com/60" alt="آواتار کاربر" class="avatar">
+                                            <span class="author-name">علی محمدی</span>
+                                        </div>
+                                        <div class="comment-metadata">
+                                            <time datetime="2023-03-10">۱۱ فروردین ۱۴۰۴</time>
+                                        </div>
+                                    </div>
+                                    <div class="comment-content">
+                                        <p>مقاله بسیار جامع و کاملی بود. آیا می‌توانید منابع بیشتری برای مطالعه در مورد
+                                            یادگیری خودنظارتی معرفی کنید؟</p>
+                                    </div>
+                                    <div class="comment-actions">
+                                        <a href="#" class="comment-reply">پاسخ</a>
+                                    </div>
+                                </article>
+
+                                <ol class="children">
+                                    <li class="comment">
+                                        <article class="comment-body">
+                                            <div class="comment-meta">
+                                                <div class="comment-author">
+                                                    <img src="https://via.placeholder.com/60" alt="آواتار نویسنده"
+                                                        class="avatar">
+                                                    <span class="author-name">مالکی</span>
+                                                    <span class="author-badge">نویسنده</span>
+                                                </div>
+                                                <div class="comment-metadata">
+                                                    <time datetime="2023-03-10">۱۱ فروردین ۱۴۰۴</time>
+                                                </div>
+                                            </div>
+                                            <div class="comment-content">
+                                                <p>علی جان، ممنون از نظرتان. بله حتماً. می‌توانید مقالات جدید یان لکان
+                                                    در مورد یادگیری خودنظارتی را مطالعه کنید. همچنین مقاله‌ای در همین
+                                                    وبلاگ در مورد SIMCLR و BYOL در آینده نزدیک منتشر خواهم کرد.</p>
+                                            </div>
+                                            <div class="comment-actions">
+                                                <a href="#" class="comment-reply">پاسخ</a>
+                                            </div>
+                                        </article>
+                                    </li>
+                                </ol>
+                            </li>
+
+                            <li class="comment">
+                                <article class="comment-body">
+                                    <div class="comment-meta">
+                                        <div class="comment-author">
+                                            <img src="https://via.placeholder.com/60" alt="آواتار کاربر" class="avatar">
+                                            <span class="author-name">سارا احمدی</span>
+                                        </div>
+                                        <div class="comment-metadata">
+                                            <time datetime="2023-03-09">۱۰ فروردین ۱۴۰۴</time>
+                                        </div>
+                                    </div>
+                                    <div class="comment-content">
+                                        <p>در مورد استفاده از شبکه‌های عصبی عمیق در پردازش زبان فارسی چطور؟ آیا مدل‌های
+                                            خاصی برای زبان فارسی وجود دارد؟</p>
+                                    </div>
+                                    <div class="comment-actions">
+                                        <a href="#" class="comment-reply">پاسخ</a>
+                                    </div>
+                                </article>
+                            </li>
+                        </ol>
+
+                        <div id="respond" class="comment-respond">
+                            <h3 class="comment-reply-title">ارسال دیدگاه</h3>
+                            <form class="comment-form">
+                                <p class="comment-notes">نشانی ایمیل شما منتشر نخواهد شد. فیلدهای الزامی مشخص شده‌اند *
+                                </p>
+                                <div class="comment-form-author">
+                                    <label for="author">نام *</label>
+                                    <input id="author" name="author" type="text" required>
+                                </div>
+                                <div class="comment-form-email">
+                                    <label for="email">ایمیل *</label>
+                                    <input id="email

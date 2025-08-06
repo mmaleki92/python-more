@@ -1,35 +1,426 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بیشتر پایتون! - بلاگ</title>
-    <link rel="stylesheet" href="../../static/css/styles.css">
+    <title>وبلاگ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/sidebar-fix.css">
+    <link rel="stylesheet" href="assets/css/layout-fix.css">
+    <link rel="stylesheet" href="assets/css/final-fix.css">
+    <link rel="stylesheet" href="assets/css/grid-fix.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
+
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="../../index.html">خانه</a></li>
-                <!-- <li><a href="../blog/index.html">بلاگ</a></li>
-                <li><a href="../projects/index.html">پروژه‌ها</a></li>
-                <li><a href="../resources/index.html">منابع</a></li>
-                <li><a href="../youtube//index.html">یوتیوب</a></li> -->
-            </ul>
-        </nav>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="site-branding">
+                    <a href="index.html" class="logo">
+                        <span class="logo-icon"><i class="fas fa-brain"></i></span>
+                        <span class="logo-text">وبلاگ </span>
+                    </a>
+                </div>
+
+                <nav class="main-navigation">
+                    <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                        <span class="sr-only">منو</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <ul class="menu">
+                        <li class="active"><a href="index.html">خانه</a></li>
+                        <li><a href="about.html">درباره من</a></li>
+                        <li class="has-children">
+                            <a href="#">موضوعات</a>
+                            <ul class="sub-menu">
+                                <li><a href="#">یادگیری عمیق</a></li>
+                                <li><a href="#">یادگیری ماشین</a></li>
+                                <li><a href="#">هوش مصنوعی</a></li>
+                                <li><a href="#">پردازش تصویر</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="contact.html">تماس با من</a></li>
+                    </ul>
+                </nav>
+
+                <div class="header-actions">
+                    <button class="search-toggle" aria-expanded="false">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="search-overlay">
+                <form class="search-form" role="search" method="get" action="#">
+                    <input type="search" class="search-field" placeholder="جستجو..." name="s">
+                    <button type="submit" class="search-submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="search-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
     </header>
-    
-    <div class="blog-post">
-        <h3><a href="posts/post_1.html">عنوان پست بلاگ ۱</a></h3>
-        <p>مقدمه‌ای کوتاه برای پست بلاگ شما. موضوعات مرتبط با کار یا علایق خود را بحث کنید.</p>
-        <a href="posts/post_1.html">بیشتر بخوانید</a>
+
+    <div class="featured-post">
+        <div class="container">
+            <div class="featured-content">
+                <div class="post-categories">
+                    <a href="#">یادگیری عمیق</a>
+                    <a href="#">هوش مصنوعی</a>
+                </div>
+                <h2 class="featured-title"><a href="post.html">راهنمای کامل شبکه‌های عصبی عمیق و کاربردهای آن در سال
+                        ۱۴۰۴</a></h2>
+                <div class="post-meta">
+                    <span class="post-author"><i class="fas fa-user"></i> مالکی</span>
+                    <span class="post-date"><i class="far fa-calendar-alt"></i> ۱۲ فروردین ۱۴۰۴</span>
+                    <span class="post-comments"><i class="far fa-comment"></i> ۲۴ دیدگاه</span>
+                </div>
+                <p class="featured-excerpt">
+                    در این مقاله جامع به بررسی آخرین پیشرفت‌های شبکه‌های عصبی عمیق می‌پردازیم و نحوه استفاده از آن‌ها در
+                    پروژه‌های کاربردی را توضیح می‌دهیم. همه چیز از مفاهیم پایه تا تکنیک‌های پیشرفته...
+                </p>
+                <a href="post.html" class="read-more">ادامه مطلب <i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div class="featured-image">
+                <img src="https://via.placeholder.com/800x500" alt="یادگیری عمیق">
+            </div>
+        </div>
     </div>
 
-    <div class="blog-post">
-        <h3><a href="posts/post2.html">عنوان پست بلاگ ۲</a></h3>
-        <p>موضوع دیگر بلاگ. این می‌تواند در مورد پروژه‌ها، نکات، آموزش‌ها یا هر چیزی که می‌خواهید به اشتراک بگذارید، باشد.</p>
-        <a href="posts/post2.html">بیشتر بخوانید</a>
+    <main class="site-main">
+        <div class="container">
+            <div class="content-area">
+                <section class="posts-grid">
+                    <!-- Post 1 -->
+                    <article class="post-card">
+                        <div class="post-thumbnail">
+                            <a href="post.html">
+                                <img src="https://via.placeholder.com/600x400" alt="یادگیری ماشین">
+                            </a>
+                            <div class="post-categories">
+                                <a href="#">یادگیری ماشین</a>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <h3 class="post-title"><a href="post.html">الگوریتم‌های محبوب یادگیری ماشین در سال ۱۴۰۴</a>
+                            </h3>
+                            <div class="post-meta">
+                                <span class="post-date"><i class="far fa-calendar-alt"></i> ۸ فروردین ۱۴۰۴</span>
+                            </div>
+                            <p class="post-excerpt">
+                                معرفی و مقایسه الگوریتم‌های محبوب یادگیری ماشین و کاربردهای آن‌ها در صنایع مختلف که
+                                امروزه مورد استفاده قرار می‌گیرند...
+                            </p>
+                            <a href="post.html" class="read-more">ادامه مطلب <i class="fas fa-arrow-left"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Post 2 -->
+                    <article class="post-card">
+                        <div class="post-thumbnail">
+                            <a href="post.html">
+                                <img src="https://via.placeholder.com/600x400" alt="پایتون">
+                            </a>
+                            <div class="post-categories">
+                                <a href="#">برنامه‌نویسی</a>
+                                <a href="#">پایتون</a>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <h3 class="post-title"><a href="post.html">آموزش کامل کتابخانه TensorFlow در پایتون</a></h3>
+                            <div class="post-meta">
+                                <span class="post-date"><i class="far fa-calendar-alt"></i> ۲ فروردین ۱۴۰۴</span>
+                            </div>
+                            <p class="post-excerpt">
+                                در این آموزش جامع، با کتابخانه قدرتمند TensorFlow آشنا می‌شوید و یاد می‌گیرید چگونه
+                                مدل‌های یادگیری عمیق را پیاده‌سازی کنید...
+                            </p>
+                            <a href="post.html" class="read-more">ادامه مطلب <i class="fas fa-arrow-left"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Post 3 -->
+                    <article class="post-card">
+                        <div class="post-thumbnail">
+                            <a href="post.html">
+                                <img src="https://via.placeholder.com/600x400" alt="هوش مصنوعی">
+                            </a>
+                            <div class="post-categories">
+                                <a href="#">هوش مصنوعی</a>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <h3 class="post-title"><a href="post.html">چگونه هوش مصنوعی آینده مشاغل را تغییر خواهد
+                                    داد؟</a></h3>
+                            <div class="post-meta">
+                                <span class="post-date"><i class="far fa-calendar-alt"></i> ۲۵ اسفند ۱۴۰۳</span>
+                            </div>
+                            <p class="post-excerpt">
+                                بررسی تأثیر هوش مصنوعی بر بازار کار و مشاغل آینده، چه مشاغلی در خطر هستند و چه فرصت‌های
+                                جدیدی ایجاد می‌شود...
+                            </p>
+                            <a href="post.html" class="read-more">ادامه مطلب <i class="fas fa-arrow-left"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Post 4 -->
+                    <article class="post-card">
+                        <div class="post-thumbnail">
+                            <a href="post.html">
+                                <img src="https://via.placeholder.com/600x400" alt="شبکه عصبی">
+                            </a>
+                            <div class="post-categories">
+                                <a href="#">شبکه عصبی</a>
+                                <a href="#">یادگیری عمیق</a>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <h3 class="post-title"><a href="post.html">معرفی معماری‌های پیشرفته شبکه‌های عصبی
+                                    کانولوشنی</a></h3>
+                            <div class="post-meta">
+                                <span class="post-date"><i class="far fa-calendar-alt"></i> ۱۵ اسفند ۱۴۰۳</span>
+                            </div>
+                            <p class="post-excerpt">
+                                در این مقاله انواع مختلف معماری‌های شبکه‌های عصبی کانولوشنی را بررسی می‌کنیم و عملکرد
+                                آن‌ها را در پردازش تصویر مقایسه می‌نماییم...
+                            </p>
+                            <a href="post.html" class="read-more">ادامه مطلب <i class="fas fa-arrow-left"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Post 5 -->
+                    <article class="post-card">
+                        <div class="post-thumbnail">
+                            <a href="post.html">
+                                <img src="https://via.placeholder.com/600x400" alt="پردازش زبان طبیعی">
+                            </a>
+                            <div class="post-categories">
+                                <a href="#">NLP</a>
+                                <a href="#">پردازش زبان</a>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <h3 class="post-title"><a href="post.html">پردازش زبان طبیعی فارسی با استفاده از مدل‌های
+                                    زبانی بزرگ</a></h3>
+                            <div class="post-meta">
+                                <span class="post-date"><i class="far fa-calendar-alt"></i> ۵ اسفند ۱۴۰۳</span>
+                            </div>
+                            <p class="post-excerpt">
+                                چگونه مدل‌های زبانی بزرگ مانند GPT و BERT را برای پردازش زبان فارسی تنظیم کنیم و از
+                                آن‌ها در کاربردهای مختلف استفاده نماییم...
+                            </p>
+                            <a href="post.html" class="read-more">ادامه مطلب <i class="fas fa-arrow-left"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Post 6 -->
+                    <article class="post-card">
+                        <div class="post-thumbnail">
+                            <a href="post.html">
+                                <img src="https://via.placeholder.com/600x400" alt="داده کاوی">
+                            </a>
+                            <div class="post-categories">
+                                <a href="#">داده کاوی</a>
+                                <a href="#">بیگ دیتا</a>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <h3 class="post-title"><a href="post.html">روش‌های پیشرفته پیش‌پردازش داده در پروژه‌های
+                                    یادگیری ماشین</a></h3>
+                            <div class="post-meta">
+                                <span class="post-date"><i class="far fa-calendar-alt"></i> ۲۵ بهمن ۱۴۰۳</span>
+                            </div>
+                            <p class="post-excerpt">
+                                پیش‌پردازش داده یکی از مهمترین مراحل در پروژه‌های یادگیری ماشین است. در این مقاله،
+                                تکنیک‌های پیشرفته و کاربردی را معرفی می‌کنیم...
+                            </p>
+                            <a href="post.html" class="read-more">ادامه مطلب <i class="fas fa-arrow-left"></i></a>
+                        </div>
+                    </article>
+                </section>
+
+                <nav class="pagination">
+                    <span class="current">۱</span>
+                    <a href="#">۲</a>
+                    <a href="#">۳</a>
+                    <span class="dots">...</span>
+                    <a href="#">۵</a>
+                    <a href="#" class="next"><i class="fas fa-arrow-left"></i></a>
+                </nav>
+            </div>
+
+            <aside class="sidebar">
+                <div class="widget widget-about">
+                    <div class="about-author">
+                        <img src="https://via.placeholder.com/150" alt="مالکی" class="author-avatar">
+                        <h3 class="author-name">مالکی</h3>
+                        <p class="author-bio">
+                            استاد هوش مصنوعی و یادگیری ماشین با بیش از ۱۰ سال تجربه در زمینه‌های مختلف پژوهشی و صنعتی.
+                            علاقه‌مند به اشتراک‌گذاری دانش و تجربیات در حوزه فناوری‌های نوین.
+                        </p>
+                    </div>
+                    <div class="author-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="widget widget-subscription">
+                    <h3 class="widget-title">عضویت در خبرنامه</h3>
+                    <p>برای دریافت جدیدترین مقالات و آموزش‌ها در ایمیل خود، در خبرنامه عضو شوید.</p>
+                    <form class="subscription-form">
+                        <input type="email" placeholder="آدرس ایمیل شما" required>
+                        <button type="submit" class="btn">عضویت</button>
+                    </form>
+                </div>
+
+                <div class="widget widget-categories">
+                    <h3 class="widget-title">دسته‌بندی‌ها</h3>
+                    <ul>
+                        <li><a href="#">یادگیری عمیق <span>(۱۲)</span></a></li>
+                        <li><a href="#">هوش مصنوعی <span>(۸)</span></a></li>
+                        <li><a href="#">یادگیری ماشین <span>(۱۵)</span></a></li>
+                        <li><a href="#">پردازش تصویر <span>(۹)</span></a></li>
+                        <li><a href="#">پردازش زبان طبیعی <span>(۶)</span></a></li>
+                        <li><a href="#">داده کاوی <span>(۴)</span></a></li>
+                        <li><a href="#">برنامه‌نویسی <span>(۱۱)</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="widget widget-popular-posts">
+                    <h3 class="widget-title">محبوب‌ترین مقالات</h3>
+                    <ul class="popular-posts">
+                        <li>
+                            <div class="post-image">
+                                <a href="post.html">
+                                    <img src="https://via.placeholder.com/100" alt="پست محبوب">
+                                </a>
+                            </div>
+                            <div class="post-info">
+                                <h4 class="post-title"><a href="post.html">مقدمه‌ای بر یادگیری عمیق</a></h4>
+                                <span class="post-date">۱۵ آذر ۱۴۰۳</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="post-image">
+                                <a href="post.html">
+                                    <img src="https://via.placeholder.com/100" alt="پست محبوب">
+                                </a>
+                            </div>
+                            <div class="post-info">
+                                <h4 class="post-title"><a href="post.html">تکنیک‌های بهینه‌سازی در یادگیری ماشین</a>
+                                </h4>
+                                <span class="post-date">۲۳ مهر ۱۴۰۳</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="post-image">
+                                <a href="post.html">
+                                    <img src="https://via.placeholder.com/100" alt="پست محبوب">
+                                </a>
+                            </div>
+                            <div class="post-info">
+                                <h4 class="post-title"><a href="post.html">شبکه‌های عصبی کانولوشنی در عمل</a></h4>
+                                <span class="post-date">۷ شهریور ۱۴۰۳</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="widget widget-tags">
+                    <h3 class="widget-title">برچسب‌ها</h3>
+                    <div class="tag-cloud">
+                        <a href="#">یادگیری عمیق</a>
+                        <a href="#">شبکه عصبی</a>
+                        <a href="#">هوش مصنوعی</a>
+                        <a href="#">پایتون</a>
+                        <a href="#">TensorFlow</a>
+                        <a href="#">PyTorch</a>
+                        <a href="#">NLP</a>
+                        <a href="#">پردازش تصویر</a>
+                        <a href="#">داده کاوی</a>
+                        <a href="#">بیگ دیتا</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-widgets">
+                <div class="footer-widget">
+                    <h3 class="widget-title">درباره وبلاگ</h3>
+                    <p>این وبلاگ با هدف به اشتراک گذاشتن دانش و تجربیات در حوزه هوش مصنوعی، یادگیری ماشین و یادگیری عمیق
+                        ایجاد شده است.</p>
+                </div>
+                <div class="footer-widget">
+                    <h3 class="widget-title">لینک‌های مفید</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">خانه</a></li>
+                        <li><a href="#">درباره من</a></li>
+                        <li><a href="#">آرشیو مقالات</a></li>
+                        <li><a href="#">دوره‌های آموزشی</a></li>
+                        <li><a href="#">تماس با من</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h3 class="widget-title">آخرین مقالات</h3>
+                    <ul class="footer-posts">
+                        <li><a href="#">راهنمای کامل شبکه‌های عصبی عمیق</a></li>
+                        <li><a href="#">الگوریتم‌های محبوب یادگیری ماشین</a></li>
+                        <li><a href="#">آموزش کامل کتابخانه TensorFlow</a></li>
+                        <li><a href="#">هوش مصنوعی و آینده مشاغل</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h3 class="widget-title">تماس با من</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> mmaleki92@example.com</p>
+                        <p><i class="fas fa-phone"></i> ۰۹۱۲-۹۸۷-۲۳۴۵</p>
+                        <p><i class="fas fa-map-marker-alt"></i> تهران، دانشکده مهندسی کامپیوتر</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>&copy; ۱۴۰۴ وبلاگ مالکی. تمامی حقوق محفوظ است.</p>
+                </div>
+                <div class="footer-menu">
+                    <ul>
+                        <li><a href="#">حریم خصوصی</a></li>
+                        <li><a href="#">قوانین و مقررات</a></li>
+                        <li><a href="#">سوالات متداول</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="scroll-to-top">
+        <button id="scrollTop">
+            <i class="fas fa-arrow-up"></i>
+        </button>
     </div>
 
+    <script src="assets/js/script.js"></script>
 </body>
+
 </html>

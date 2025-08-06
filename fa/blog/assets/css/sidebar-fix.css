@@ -1,0 +1,79 @@
+/* ===== Updated Layout & Grid ===== */
+/* Replace the existing Layout & Grid section with this */
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Replace float-based layout with flexbox */
+.site-main .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.content-area {
+    flex: 1;
+    min-width: 0;
+    /* Prevent flex item from overflowing */
+    width: calc(67% - 1rem);
+}
+
+.sidebar {
+    width: 30%;
+    padding-right: 0;
+    /* Remove the extra padding */
+}
+
+/* Make sure the clearfix is applied to the container */
+.clearfix::after,
+.site-main .container::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Update responsive styles for the new layout */
+@media (max-width: 992px) {
+    .site-main .container {
+        flex-direction: column;
+    }
+
+    .content-area,
+    .sidebar {
+        width: 100%;
+    }
+
+    .sidebar {
+        margin-top: 3rem;
+    }
+}
+
+/* Add proper margins to widgets */
+.widget {
+    margin-bottom: 3rem;
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Update widget-about specifically */
+.widget-about {
+    text-align: center;
+}
+
+.widget-about .author-avatar {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1rem;
+}
+
+/* Add hover effect to make widgets more interactive */
+.widget:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
+}
