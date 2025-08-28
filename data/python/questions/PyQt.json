@@ -1,0 +1,47 @@
+{
+    "metadata": {
+        "version": "1.0.0",
+        "author": "Morteza Maleki",
+        "date_created": "N/A",
+        "description": "تمرین‌هایی از پایکیوت برای ساخت نرم افزار دسکتاپ",
+        "category": "python",
+        "title": "PyQt"
+    },
+    "questions": [
+        {
+            "title": "ساخت لیست کشویی",
+            "content": "با چه روشی می‌توان یک لیست کشویی (QComboBox) در PyQt ایجاد و چند مقدار به آن اضافه کرد؟",
+            "textarea": false,
+            "upload_area": true,
+            "id": 1
+        },
+        {
+            "title": "استفاده از Layout",
+            "content": "چگونه می‌توان از QVBoxLayout یا QHBoxLayout برای مرتب‌سازی ویجت‌ها در یک پنجره PyQt استفاده کرد؟",
+            "textarea": false,
+            "upload_area": true,
+            "id": 2
+        },
+        {
+            "title": "ماشین حساب ساده",
+            "content": "برای ساخت یک ماشین حساب ساده با PyQt که چهار عمل اصلی (جمع، تفریق، ضرب، تقسیم) را انجام دهد، چه ویجت‌هایی نیاز است و هر کدام چه نقشی دارند؟",
+            "textarea": false,
+            "upload_area": true,
+            "id": 3
+        },
+        {
+            "title": "ساخت نرم‌افزار paint",
+            "content": "یک نرم افزار مانند paint ایجاد کنید و حتما قلم و پاکن داشته باشد.",
+            "textarea": false,
+            "upload_area": true,
+            "id": 4
+        },
+        {
+            "title": "اتصال ui به کد backend  با استفاده از uic",
+            "content": "نمونه اتصال ui به backend را بنویسید با استفاده از qtdesigner",
+            "textarea": false,
+            "upload_area": true,
+            "id": 5
+        }
+    ]
+}

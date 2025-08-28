@@ -78,5 +78,10 @@
         "title": "generator",
         "description": "در این قسمت تمرین‌هایی از مبحث جنریتور انجام می‌دهیم. ",
         "file_path": "posts/generator.html"
+    },
+    {
+        "title": "PyQt",
+        "description": "تمرین‌هایی از پایکیوت برای ساخت نرم افزار دسکتاپ",
+        "file_path": "posts/PyQt.html"
     }
 ]
