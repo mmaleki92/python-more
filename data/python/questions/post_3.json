@@ -28,6 +28,48 @@
             "content": "<p class='mixed-direction'>چگونه می‌توان یک رشته را درون رشته‌ی دیگر پیدا کرد؟</p",
             "textarea": true,
             "upload_area": false
+        },
+        {
+            "title": "استفاده از متد startswith() و endswith()",
+            "content": "رشته زیر داده شده است:\r\n\r\nبا استفاده از متدهای مربوطه بررسی کنید آیا این رشته با برنامه شروع می‌شود و با نویسی پایان می‌یابد یا خیر.<pre><code class='language-python'>word = \"برنامه‌نویسی\"</code></pre>",
+            "textarea": false,
+            "upload_area": true,
+            "id": 2
+        },
+        {
+            "title": "استفاده از متدهای upper() و lower()",
+            "content": "رشته زیر داده شده است:\r\n\r\nتمام حروف انگلیسی را به حروف بزرگ تبدیل کنید\r\n\r\nتمام حروف انگلیسی را به حروف کوچک تبدیل کنید<pre><code class='language-python'>message = \"Python زبان قدرتمندی است\"</code></pre>",
+            "textarea": false,
+            "upload_area": true,
+            "id": 3
+        },
+        {
+            "title": "استفاده از متد find()",
+            "content": "رشته زیر داده شده است:\r\n\r\nبا استفاده از متد find() موقعیت اولین حرف ز را در رشته پیدا کنید.<pre><code class='language-python'>sentence = \"پایتون بهترین زبان برنامه‌نویسی است\"</code></pre>",
+            "textarea": false,
+            "upload_area": true,
+            "id": 4
+        },
+        {
+            "title": "استفاده از متد count()",
+            "content": "رشته زیر داده شده است:\r\nبا استفاده از متد count() تعداد تکرار کلمه علی را بیابید.<pre><code class='language-python'>text = \"علی علی رضا رضا علی\"</code></pre>",
+            "textarea": false,
+            "upload_area": true,
+            "id": 5
+        },
+        {
+            "title": "ترکیب strip() و len()",
+            "content": "رشته زیر داده شده است:\r\n\r\nابتدا با استفاده از strip() فاصله‌های ابتدا و انتهای رشته را حذف کنید.\r\n\r\nسپس طول رشته جدید را با len() محاسبه کنید.<pre><code class='language-python'>data = \"   سلام پایتون   \"</code></pre>",
+            "textarea": false,
+            "upload_area": true,
+            "id": 6
+        },
+        {
+            "title": "استفاده از capitalize()",
+            "content": "رشته زیر داده شده است:\r\n\r\nبا استفاده از متد capitalize()، اولین حرف رشته را به حروف بزرگ تبدیل کنید و بقیه را کوچک نگه دارید.<pre><code class='language-python'>name = \"python programming\"</code></pre>",
+            "textarea": false,
+            "upload_area": true,
+            "id": 7
         }
     ]
 }
