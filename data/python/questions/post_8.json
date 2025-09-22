@@ -42,6 +42,48 @@
             "id": 5,
             "textarea": true,
             "upload_area": false
+        },
+        {
+            "title": "افزودن به دیکشنری",
+            "content": "فرض کنید دیکشنری زیر را داریم. حال برنامه‌ای بنویسید که تنها موقعی که نمره کم‌تر از 90 باشد اجازه تغییر نمره را داشته باشد.<pre><code class='language-python'>student = {\"name\": \"ali\", \"marks\": 87}</code></pre>",
+            "textarea": false,
+            "upload_area": false,
+            "id": 6
+        },
+        {
+            "title": "دیکشنری تو در تو",
+            "content": "در دیکشنری زیر به نمره physics درسترسی کیدا کنید و مقدار آن را چاپ کنید.<pre><code class='language-python'>student = {\r\n    \"name\": \"fateme\",\r\n    \"grades\": {\"math\": 88, \"physics\": 92}\r\n}</code></pre>",
+            "textarea": false,
+            "upload_area": false,
+            "id": 7
+        },
+        {
+            "title": "تغییر مقدار دیکشنری",
+            "content": "برنامه‌ای بنویسید که وجود banana را چک کند و اگر مقدار آن کمتر از ۳ بود مقدار آن را افزایش دهد.<pre><code class='language-python'>prices = {\"apple\": 3, \"banana\": 2, \"mango\": 5}\r\n</code></pre>",
+            "textarea": false,
+            "upload_area": false,
+            "id": 8
+        },
+        {
+            "title": "مقادیر مجاز کلید دیکشنری",
+            "content": "برای یک دیکشنری چه نوع دیتاهایی مجازی است؟ آیا مثلا استفاده از تاپل به عنوان کلید مجاز است؟",
+            "textarea": false,
+            "upload_area": false,
+            "id": 9
+        },
+        {
+            "title": "جایگزینی در لیست درون دیکشنری ",
+            "content": "در کد زیر چگونه می‌توانیم math را با history جایگزین کنیم؟ کد آن را بنویسید.<pre><code class='language-python'>catalog = {\r\n    \"books\": [\"Python\", \"Math\", \"History\"],\r\n    \"count\": 3\r\n}</code></pre>",
+            "textarea": false,
+            "upload_area": false,
+            "id": 10
+        },
+        {
+            "title": "دسترسی به لیست درون دیکشنری",
+            "content": "برنامه‌ای بنویسید که چک کند آیا tags درون دیکشنری وجود دارد و همچنین urgent درون لیست tags وجود دارد؟<pre><code class='language-python'>record = {\"id\": 101, \"tags\": [\"urgent\", \"review\"]}\r\n</code></pre>",
+            "textarea": false,
+            "upload_area": false,
+            "id": 11
         }
     ]
 }
