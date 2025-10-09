@@ -1,0 +1,68 @@
+{
+    "metadata": {
+        "version": "1.0.0",
+        "author": "Morteza Maleki",
+        "date_created": "N/A",
+        "description": "هدف از این آزمون مرور مباحث یادگیری ماشین و ابزارهاست",
+        "category": "machine_learning",
+        "title": "آزمون اول یادگیری ماشین"
+    },
+    "questions": [
+        {
+            "title": "تفاوت یادگیری ماشین با برنامه‌نویسی",
+            "content": "یادگیری ماشین چیست و تفاوت آن با برنامه‌نویسی عادی چیست؟",
+            "textarea": true,
+            "upload_area": false,
+            "id": 1
+        },
+        {
+            "title": "تابع هزینه",
+            "content": "تابع هزینه یا loss function چیست؟ دو نوع از آن را نام ببرید.",
+            "textarea": true,
+            "upload_area": false,
+            "id": 2
+        },
+        {
+            "title": "تفاوت رگراسیون و طبقه بندی؟",
+            "content": "رگراسیون و طبقه‌بندی را توضیح دهید و تفاوت آن‌ها را ذکر کنید.",
+            "textarea": true,
+            "upload_area": false,
+            "id": 3
+        },
+        {
+            "title": "آرایه نامپای",
+            "content": "آرایه نامپای چه تفاوتی با لیست پایتون دارد؟",
+            "textarea": true,
+            "upload_area": false,
+            "id": 4
+        },
+        {
+            "title": "رسم تابع توزیع یک آرایه",
+            "content": "یک آرایه رندوم با 10000 عدد با نامپای ایجاد کنید و توزیع آن را با هیستوگرام رسم کنید.",
+            "textarea": true,
+            "upload_area": true,
+            "id": 5
+        },
+        {
+            "title": "ایجاد آرایه‌ی دو بعدی",
+            "content": "یک آرایه‌ی دوبعدی نامپای ایجاد کنید و مقادیر دور آن را 1 و مقادیر داخل آن را 0 جایگذاری کنید.",
+            "textarea": true,
+            "upload_area": true,
+            "id": 6
+        },
+        {
+            "title": "فایل csv",
+            "content": "فایل csv چیست؟",
+            "textarea": true,
+            "upload_area": false,
+            "id": 7
+        },
+        {
+            "title": "overfitting - underfitting",
+            "content": " overfitting  و underfitting را توضیح دهید و تفاوت هر دو را ذکر کنید.",
+            "textarea": true,
+            "upload_area": false,
+            "id": 8
+        }
+    ]
+}
